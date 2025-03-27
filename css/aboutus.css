@@ -1,0 +1,363 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+body {
+    background-color: #f6e2c1;
+    overflow-x: hidden;
+    margin-top: 6%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+}
+
+.title {
+    font-size: 3rem;
+    color: #ff6b6b;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 0 #ffe66d;
+    position: relative;
+    z-index: 2;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #4d96ff;
+    margin-bottom: 20px;
+}
+
+.cloud {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.1));
+    z-index: 1;
+}
+
+.cloud-1 {
+    width: 100px;
+    height: 60px;
+    top: 10px;
+    left: 10%;
+    animation: float 8s ease-in-out infinite;
+}
+
+.cloud-2 {
+    width: 80px;
+    height: 50px;
+    top: 30px;
+    right: 15%;
+    animation: float 7s ease-in-out infinite 1s;
+}
+
+.cloud-3 {
+    width: 60px;
+    height: 40px;
+    bottom: 20px;
+    left: 25%;
+    animation: float 9s ease-in-out infinite 2s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-20px) translateX(15px);
+    }
+}
+
+.section {
+    background-color: rgb(249, 213, 154);
+    border-radius: 30px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+.section.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #4d96ff;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100px;
+    height: 5px;
+    background-color: #ffe66d;
+    border-radius: 10px;
+}
+
+.content-placeholder {
+    background-color: #f1f5f9;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    min-height: 100px;
+    position: relative;
+}
+
+.team-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.team-member {
+    width: 200px;
+    background-color: #f1f5f9;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #ffe66d;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+}
+
+.name {
+    font-weight: bold;
+    color: #4d96ff;
+    margin-bottom: 5px;
+}
+
+.role {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.bubble {
+    position: absolute;
+    background-color: rgba(255, 230, 109, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.character {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.character-body {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: #ff6b6b;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+.character-eye {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    top: 30px;
+}
+
+.character-eye-left {
+    left: 25px;
+}
+
+.character-eye-right {
+    right: 25px;
+}
+
+.character-pupil {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+    top: 5px;
+    left: 5px;
+}
+
+.character-mouth {
+    position: absolute;
+    width: 40px;
+    height: 20px;
+    background-color: white;
+    border-radius: 0 0 20px 20px;
+    top: 60px;
+    overflow: hidden;
+}
+
+.speech-bubble {
+    position: absolute;
+    background-color: white;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-width: 200px;
+    bottom: 130px;
+    right: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    font-size: 14px;
+    z-index: 10;
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid white;
+}
+
+.speech-bubble.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    color: #4d96ff;
+    position: relative;
+}
+
+.grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #4ae806;
+    border-radius: 30px 30px 0 0;
+    z-index: -1;
+}
+
+.flower {
+    position: absolute;
+    bottom: 50px;
+    width: 30px;
+    height: 30px;
+}
+
+.flower-center {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: #ffe66d;
+    border-radius: 50%;
+    left: 7.5px;
+    top: 7.5px;
+    z-index: 2;
+}
+
+.flower-petal {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #ff6b6b;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.petal-1 { top: 0; left: 9px; }
+.petal-2 { top: 9px; left: 0; }
+.petal-3 { top: 9px; right: 0; }
+.petal-4 { bottom: 0; left: 9px; }
+
+.flower-stem {
+    position: absolute;
+    width: 4px;
+    height: 30px;
+    background-color: #7ed957;
+    left: 13px;
+    bottom: -25px;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .team-container {
+        justify-content: center;
+    }
+    
+    .team-member {
+        width: 150px;
+    }
+}

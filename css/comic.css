@@ -1,0 +1,133 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    row-gap: 50px;
+    column-gap: 120px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    transition: transform 0.3s ease-out;
+}
+.book {
+    margin-top: 20px;
+    position: relative;
+    border-radius: 10px;
+    width: 220px;
+    height: 300px;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    box-shadow: 1px 1px 12px #000;
+    -webkit-transform: preserve-3d;
+    -ms-transform: preserve-3d;
+    transform: preserve-3d;
+    -webkit-perspective: 2000px;
+    perspective: 2000px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+   flex-direction: column;
+    color: #000;
+  }
+  
+  .cover {
+    top: 0;
+    position: absolute;
+    background-color: lightgray;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    -webkit-transform-origin: 0;
+    -ms-transform-origin: 0;
+    transform-origin: 0;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    box-shadow: 1px 1px 12px #000;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  img{
+    width: 100%;
+    height: 100%;
+  }
+  
+  .book:hover .cover {
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    -webkit-transform: rotatey(-150deg);
+    -ms-transform: rotatey(-140deg);
+    transform: rotatey(-130deg);
+    border-radius: 10px;
+  }
+  
+  p {
+    font-size: 12.1px;
+  }
+
+  .books{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 70px;
+    column-gap: 190px;
+    margin-left: 100px;
+    align-items: center;
+  }
+
+  /* From Uiverse.io by adamgiebl */ 
+.Button  {
+  position: relative;
+  display: inline-block;
+  display: block;
+  margin: 15px;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #ff6f02;
+  background: transparent;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  border: 2px solid #f5a970;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 0 #f5a970;
+  width: 150px;
+  text-align: center;
+  margin-left: 40px;
+  border-radius: 25px;
+}
+
+.Button:hover {
+  color: white;
+  box-shadow: inset 0 -100px 0 0 #edaf43;
+}
+
+.Button:active {
+  transform: scale(0.9);
+}
+
+.content{
+  text-align: center;
+}
+
+.shift-right {
+  transform: translateX(60px);
+}
+
+a{
+  text-decoration: none;
+}
+.name{
+  text-align: center;
+  color: #000;
+  text-size-adjust: 20px;
+}

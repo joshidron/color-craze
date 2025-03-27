@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    margin-top: 6%;
+}
+.controls {
+    margin: 20px;
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: initial;
+}
+
+canvas {
+    border: 4px solid #000;
+    cursor: crosshair;
+    background-color: white;
+    margin-left: 1%;
+}
+.canva{
+    background-color: white;
+    color: #0b0a0b;
+    border-radius: 1rem;
+    background-color: transparent;
+}
+#colorPicker {
+    margin-top: 3px;
+  width: 40px; /* Set width for the color picker */
+  height: 23px; /* Set height for the color picker */
+  border: none; /* Remove the default border */
+  cursor: pointer; /* Change cursor to pointer when hovering */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for a subtle 3D effect */
+  transition: box-shadow 0.3s ease; /* Add smooth transition on hover */
+}
+
+#colorPicker:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
+}
+
+/* Style for the select element */
+#shapePicker {
+    appearance: none; /* Remove default browser styling */
+    -webkit-appearance: none; /* Remove default Safari styling */
+    -moz-appearance: none; /* Remove default Firefox styling */
+    background-color: #f5a970; /* Background color */
+    color: #000000; /* Text color */
+    font-size: 1em; /* Font size */
+    padding: 10px 15px 10px 15px; /* Padding for the select */
+    border: 1px solid #ebac75; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+/* Change border color on focus */
+#shapePicker:focus {
+    border-color: #f5a970; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Style for the custom arrow */
+#shapePicker::after {
+    content: '▼'; /* Custom arrow */
+    position: absolute;
+    right: 15px; /* Position arrow to the right */
+    top: 50%; /* Center the arrow vertically */
+    transform: translateY(-50%); /* Adjust for centering */
+    pointer-events: none; /* Prevent interaction with the arrow */
+}
+
+/* Container for the select element to handle positioning */
+.select-container {
+    position: relative; /* Position relative for the custom arrow */
+    width: 200px; /* Set width as needed */
+}
+
+button{
+    background-color: transparent;
+    color: #070707;
+    border-radius: 0.5rem;
+    height: 3rem;
+    width: 5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+}
+button:hover {
+    background-color: #f5a970; /* Darken color on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+button:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(228, 183, 104, 0.5); /* Outline shadow for focus */
+}
+/* Style for the number input */
+#brushSize {
+    appearance: none; /* Remove default styling */
+    -webkit-appearance: none; /* Remove default Safari styling */
+    -moz-appearance: textfield; /* Remove default Firefox styling */
+    background-color: #f5a970; /* Background color */
+    color: #0e0d0d; /* Text color */
+    font-size: 16px; /* Font size */
+    padding: 10px; /* Padding */
+    border: 1px solid #ec9756; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    width: 40px; /* Set a fixed width */
+}
+
+/* Style for the input on focus */
+#brushSize:focus {
+    border-color: #f5a970; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: #d27f40; /* Outline shadow for focus */
+}
+
+/* Remove default spinner buttons in Webkit browsers */
+#brushSize::-webkit-inner-spin-button,
+#brushSize::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remove spinner */
+    margin: 0; /* Remove margin */
+}
+
+.fade-in.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Moves the section to its original position */
+}
