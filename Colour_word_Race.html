@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Word Race</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+            padding: 0;
+        }
+
+        .game-container {
+            margin-top: 50px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .color-word {
+            font-size: 64px;
+            font-weight: bold;
+            margin: 20px 0;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .options button {
+            font-size: 24px;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .options button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .timer, .score {
+            font-size: 28px;
+            margin: 10px 0;
+        }
+
+        .high-score {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .game-over {
+            font-size: 36px;
+            color: red;
+            margin: 20px 0;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .exit-btn {
+            font-size: 20px;
+            color: #fff;
+            background-color: #10002b;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+            text-decoration: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="timer">⏱ Time Left: <span id="timer">60</span> seconds</div>
+        <div class="score">🌟 Score: <span id="score">0</span> | Max Score: <span id="maxScore">0</span></div>
+        <div class="color-word" id="colorWord">Blue</div>
+        <div class="options" id="options"></div>
+        <div class="game-over" id="gameOver" style="display: none;">🚨 Game Over! Try Again! 🚨</div>
+    </div>
+    <a href="game.html" class="exit-btn">Exit</a>
+
+    <script>
+        const colors = ["Red", "Blue", "Green", "Yellow", "Orange", "Purple", "Pink", "Black", "White", "Gray"];
+        let score = 0;
+        let maxScore = localStorage.getItem("maxScore") || 0;
+        let timeLeft = 60;
+        let timerInterval;
+
+        const colorWord = document.getElementById("colorWord");
+        const optionsContainer = document.getElementById("options");
+        const scoreDisplay = document.getElementById("score");
+        const maxScoreDisplay = document.getElementById("maxScore");
+        const timerDisplay = document.getElementById("timer");
+        const gameOverDisplay = document.getElementById("gameOver");
+
+        maxScoreDisplay.textContent = maxScore;
+
+        function getRandomColor() {
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function startGame() {
+            score = 0;
+            timeLeft = 60;
+            timerDisplay.textContent = timeLeft;
+            scoreDisplay.textContent = score;
+            gameOverDisplay.style.display = "none";
+            generateColorWord();
+            startTimer();
+        }
+
+        function generateColorWord() {
+            const textColor = getRandomColor();
+            const word = getRandomColor();
+            colorWord.textContent = word;
+            colorWord.style.color = textColor;
+            generateOptions(textColor);
+        }
+
+        function generateOptions(correctColor) {
+            optionsContainer.innerHTML = "";
+            const shuffledColors = [...colors].sort(() => Math.random() - 0.5);
+            shuffledColors.forEach(color => {
+                const button = document.createElement("button");
+                button.textContent = color;
+                button.style.backgroundColor = color.toLowerCase();
+                button.style.color = color === "White" ? "black" : "white"; // Contrast for white button
+                button.onclick = () => checkAnswer(color, correctColor);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedColor, correctColor) {
+            if (selectedColor === correctColor) {
+                score++;
+                scoreDisplay.textContent = score;
+            }
+            generateColorWord();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            gameOverDisplay.style.display = "block";
+            optionsContainer.innerHTML = "<button onclick='startGame()'>🔄 Restart</button>";
+            if (score > maxScore) {
+                maxScore = score;
+                localStorage.setItem("maxScore", maxScore);
+                maxScoreDisplay.textContent = maxScore;
+            }
+        }
+
+        // Start the game initially
+        startGame();
+    </script>
+</body>
+</html>

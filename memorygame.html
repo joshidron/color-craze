@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Tiles Game</title>
+  <style>
+    @keyframes backgroundAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body {
+      font-family: 'Comic Sans MS', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd);
+      background-size: 300% 300%;
+      animation: backgroundAnimation 10s ease infinite;
+    }
+
+    .welcome-screen, .game-screen {
+      text-align: center;
+      display: none;
+    }
+
+    .welcome-screen.active, .game-screen.active {
+      display: block;
+    }
+
+    .game-container {
+      display: grid;
+      grid-template-columns: repeat(4, 100px);
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .tile {
+      width: 100px;
+      height: 100px;
+      background-color: #ffcccb;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .tile:hover {
+      transform: scale(1.1);
+    }
+
+    .tile.revealed {
+      background-color: #90ee90;
+    }
+
+    .score {
+      margin: 10px;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    .exit {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #ff4500;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ff6347;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #ffd700;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 1.2em;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #ffa500;
+    }
+  </style>
+</head>
+<body>
+  <!-- Welcome Screen -->
+  <div class="welcome-screen active">
+    <h1>🎮 Welcome to the Memory Tiles Game! 🎨</h1>
+    <button id="start-game">Start the Fun!</button>
+    <a href="game.html"><button id="exit-welcome">Exit Game</button></a>
+  </div>
+
+  <!-- Game Screen -->
+  <div class="game-screen">
+    <a href="game.html"><button class="exit" id="exit">Exit Game</button></a>
+    <p class="score">Score: <span id="score">0</span></p>
+    <div class="game-container" id="game-container"></div>
+  </div>
+
+  <script>
+    const welcomeScreen = document.querySelector('.welcome-screen');
+    const gameScreen = document.querySelector('.game-screen');
+    const startGameButton = document.getElementById('start-game');
+    const gameContainer = document.getElementById('game-container');
+    const scoreElement = document.getElementById('score');
+
+    let score = 0;
+    let revealedTiles = [];
+    let tileShapes = [];
+
+    // Define shapes
+    const shapes = ["🐶", "🐱", "🦄", "🐸", "🐷", "🐙", "🦁", "🐵"];
+
+    // Generate random tile shapes
+    function generateTiles() {
+      tileShapes = [...shapes, ...shapes];
+      tileShapes.sort(() => Math.random() - 0.5);
+    }
+
+    // Create tiles dynamically
+    function createTiles() {
+      gameContainer.innerHTML = '';
+      tileShapes.forEach((shape, index) => {
+        const tile = document.createElement('div');
+        tile.classList.add('tile');
+        tile.dataset.shape = shape;
+        tile.dataset.index = index;
+        tile.addEventListener('click', handleTileClick);
+        gameContainer.appendChild(tile);
+      });
+    }
+
+    // Handle tile click
+    function handleTileClick(event) {
+      const tile = event.target;
+      if (tile.classList.contains('revealed') || revealedTiles.length >= 2) {
+        return;
+      }
+
+      tile.classList.add('revealed');
+      tile.textContent = tile.dataset.shape;
+      revealedTiles.push(tile);
+
+      if (revealedTiles.length === 2) {
+        setTimeout(checkMatch, 500);
+      }
+    }
+
+    // Check if tiles match
+    function checkMatch() {
+      const [tile1, tile2] = revealedTiles;
+      if (tile1.dataset.shape === tile2.dataset.shape) {
+        score += 10;
+        tile1.removeEventListener('click', handleTileClick);
+        tile2.removeEventListener('click', handleTileClick);
+      } else {
+        tile1.classList.remove('revealed');
+        tile2.classList.remove('revealed');
+        tile1.textContent = '';
+        tile2.textContent = '';
+      }
+
+      revealedTiles = [];
+      scoreElement.textContent = score;
+
+      if (score === shapes.length * 10) {
+        resetGame();
+      }
+    }
+
+    // Reset and restart the game
+    function resetGame() {
+      score = 0;
+      scoreElement.textContent = score;
+      generateTiles();
+      createTiles();
+    }
+
+    // Start game
+    startGameButton.addEventListener('click', () => {
+      welcomeScreen.classList.remove('active');
+      gameScreen.classList.add('active');
+      resetGame();
+    });
+  </script>
+</body>
+</html>

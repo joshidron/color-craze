@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Color Craze</title>
+        <link rel="icon" type="image/png" href="image/logo.jpg">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+    
+<body>
+    <!-- Navigation Bar -->
+    <nav class="glass-nav">
+        <!-- <button class="hamburger"><i class="fas fa-bars"></i></button> -->
+        <div class="logo">
+            <h1>Color<span>Craze</span></h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="login-form.html"><i class="fas fa-user"></i> Login</a></li>
+            <li><a href="Subscription.html"><i class="fas fa-newspaper"></i> Subscription</a></li>
+            <li><a href="about-page.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="feedback-page.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+        </ul>
+        
+    </nav>
+
+    <!-- Scrollable Dotted Timeline with Moving Character -->
+    <div class="scroll-container">
+        <div class="scroll-timeline"></div>
+        <div class="character" id="character"> 
+        </div>
+    </div>
+    
+
+    <!-- Hero Slider -->
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide active">
+                <img src="image/index/slider1.jpg" alt="Feature 1">
+                <div class="slide-content">
+                    <h2>Interactive Games</h2>
+                    <p>Learn while playing fun games!</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="image/index/slider2.jpg" alt="Feature 2">
+                <div class="slide-content">
+                    <h2>Educational Videos</h2>
+                    <p>Watch amazing educational content!</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="image/index/slider3.jpg" alt="Feature 3">
+                <div class="slide-content">
+                    <h2>Art & Crafts</h2>
+                    <p>Create beautiful artwork!</p>
+                </div>
+            </div>
+        </div>
+        <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+        <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="features-grid"> 
+        <a href="game.html" class="feature-link" style="display: inline-block; width: 100%; height: 100%;">
+            <div class="feature-card" style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='lightblue'" onmouseout="this.style.backgroundColor=''">
+                <i class="fas fa-gamepad" style="color: blue;"></i>
+                <h3>Fun Games</h3>
+                <p>Interactive educational games</p>
+                <p>Explore Games</p>
+            </div>
+        </a>
+        <a href="e-larning.html" class="feature-link" style="display: inline-block; width: 100%; height: 100%;">
+            <div class="feature-card" style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='lightcoral'" onmouseout="this.style.backgroundColor=''">
+                <i class="fas fa-graduation-cap" style="color: orangered;"></i>
+                <h3>E-Learning</h3>
+                <p>Learn from anywhere</p>
+                <p>Start Learning</p>
+            </div>
+        </a>
+        <a href="creative.html" class="feature-link" style="display: inline-block; width: 100%; height: 100%;">
+            <div class="feature-card" style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='lightgreen'" onmouseout="this.style.backgroundColor=''">
+                <i class="fas fa-paint-brush" style="color: lawngreen;"></i>
+                <h3>Creative Zone</h3>
+                <p>Express your creativity</p>
+                <p>Get Creative</p>
+            </div>
+        </a>
+        <a href="story.html" class="feature-link" style="display: inline-block; width: 100%; height: 100%;">
+            <div class="feature-card" style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='khaki'" onmouseout="this.style.backgroundColor=''">
+                <i class="fas fa-book-open" style="color: gold;"></i>
+                <h3>Stories</h3>
+                <p>Challenge your mind</p>
+                <p>Watch Now</p>
+            </div>
+        </a>
+        <a href="rhymes.html" class="feature-link" style="display: inline-block; width: 100%; height: 100%;">
+            <div class="feature-card" style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='plum'" onmouseout="this.style.backgroundColor=''">
+                <i class="fas fa-music" style="color: purple;"></i>
+                <h3>Rhymes</h3>
+                <p>Sing and learn with fun rhymes</p>
+                <p>Listen Now</p>
+            </div>
+        </a>
+        <a href="comic.html" class="feature-link" style="display: inline-block; width: 100%; height: 100%;">
+            <div class="feature-card" style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='peru'" onmouseout="this.style.backgroundColor=''">
+                <i class="fas fa-book" style="color: chocolate;"></i>
+                <h3>Comics</h3>
+                <p>Enjoy engaging and fun stories</p>
+                <p>Read Now</p>
+            </div>
+        </a>
+        <a href="robot.html" class="feature-link" style="display: inline-block; width: 100%; height: 100%;">
+            <div class="feature-card" style="transition: background 0.3s;" onmouseover="this.style.backgroundColor='lightgray'" onmouseout="this.style.backgroundColor=''">
+                 <i class="fas fa-robot" style="color: silver;"></i>
+                 <h3>Titans Bot</h3>
+                 <p>Explore the world of AI</p>
+                 <p>Learn More</p>
+             </div>
+         </a>
+    </div>
+    <!-- Footer -->
+<footer class="glass-footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="game.html"><i class="fas fa-gamepad"></i> Games</a></li>
+                <li><a href="e-larning.html"><i class="fas fa-graduation-cap"></i> E-Learning</a></li>
+                <li><a href="creative.html"><i class="fas fa-paint-brush"></i> Creative Zone</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Community</h4>
+            <ul>
+                <li><a href="story.html"><i class="fas fa-book-open"></i> Stories</a></li>
+                <li><a href="rhymes.html"><i class="fas fa-music"></i> Rhymes</a></li>
+                <li><a href="comic.html"><i class="fas fa-book"></i> Comics</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Support</h4>
+            <ul>
+                <li><a href="about-page.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="feedback-page.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-column social-column">
+            <h4>Connect With Us</h4>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="mailto:your-email@example.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+            
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Color Craze. All Rights Reserved.</p>
+    </div>
+</footer>
+    <script src="js/script.js"></script>
+</body>
+</html>

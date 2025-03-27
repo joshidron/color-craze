@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Club Challenge</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    #game-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background: white;
+      border: 2px solid #ddd;
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.5s ease-out;
+      position: relative;
+    }
+    h1 {
+      font-size: 36px;
+      color: #4a90e2;
+      margin-bottom: 20px;
+      animation: slideDown 1.5s ease-out;
+    }
+    p#instructions {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    #word-display {
+      font-size: 32px;
+      margin: 20px 0;
+      color: #444;
+      font-weight: bold;
+      animation: pulse 1s infinite;
+    }
+    #input-field {
+      font-size: 20px;
+      padding: 10px;
+      width: 100%;
+      max-width: 500px;
+      border: 2px solid #4a90e2;
+      border-radius: 5px;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+    }
+    #input-field:focus {
+      box-shadow: 0 0 10px #4a90e2;
+    }
+    #score-board {
+      margin: 20px 0;
+      font-size: 18px;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 20px;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background-color: #357ab7;
+      transform: scale(1.05);
+    }
+    button:active {
+      transform: scale(0.95);
+    }
+    .hidden {
+      display: none;
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    .exit-btn {
+            font-size: 20px;
+            color: #fff;
+            background-color: #4a90e2;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0 .3s;
+            text-decoration: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1>Typing Club Challenge</h1>
+    <p id="instructions">Type the word exactly as shown to move to the next one!</p>
+    <div id="word-display">Ready?</div>
+    <input type="text" id="input-field" placeholder="Start typing..." disabled>
+    <div id="score-board">
+      <p>Score: <span id="score">0</span></p>
+      <p>Max Score: <span id="max-score">0</span></p>
+      <p>Time Left: <span id="time-left">60</span> seconds</p>
+    </div>
+    <button id="start-button">Start Game</button>
+  </div>
+  <a href="game.html" class="exit-btn">Exit</a>
+  <script>
+    const words = [
+      "apple", "banana", "cherry", "dragon", "elephant",
+      "forest", "giraffe", "honey", "icecream", "jungle",
+      "kite", "lemon", "mountain", "night", "orange",
+      "penguin", "queen", "river", "sun", "tiger",
+      "umbrella", "violet", "whale", "xylophone", "yogurt", "zebra"
+    ];
+    let currentWord = "";
+    let score = 0;
+    let maxScore = 0;
+    let timeLeft = 60;
+    let countdown;
+
+    const wordDisplay = document.getElementById("word-display");
+    const inputField = document.getElementById("input-field");
+    const scoreDisplay = document.getElementById("score");
+    const maxScoreDisplay = document.getElementById("max-score");
+    const timeDisplay = document.getElementById("time-left");
+    const startButton = document.getElementById("start-button");
+
+    function startGame() {
+      score = 0;
+      timeLeft = 60;
+      inputField.disabled = false;
+      inputField.value = "";
+      scoreDisplay.textContent = score;
+      timeDisplay.textContent = timeLeft;
+
+      generateWord();
+      inputField.focus();
+      
+      countdown = setInterval(() => {
+        timeLeft--;
+        timeDisplay.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+          endGame();
+        }
+      }, 1000);
+
+      startButton.classList.add("hidden");
+    }
+
+    function generateWord() {
+      const randomIndex = Math.floor(Math.random() * words.length);
+      currentWord = words[randomIndex];
+      wordDisplay.textContent = `Type: ${currentWord}`;
+    }
+
+    function speakWord(word) {
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = "en-US";
+      utterance.rate = 1; // Normal speed
+      speechSynthesis.speak(utterance);
+    }
+
+    function checkInput() {
+      const typedWord = inputField.value.trim().toLowerCase();
+
+      if (typedWord === currentWord) {
+        speakWord(currentWord); // Speak the word when matched
+        score++;
+        if (score > maxScore) {
+          maxScore = score;
+          maxScoreDisplay.textContent = maxScore;
+        }
+        scoreDisplay.textContent = score;
+        inputField.value = "";
+        generateWord();
+      }
+    }
+
+    function endGame() {
+      clearInterval(countdown);
+      inputField.disabled = true;
+      wordDisplay.textContent = `Game Over! Your final score is ${score}.`;
+      startButton.classList.remove("hidden");
+      startButton.textContent = "Play Again";
+    }
+
+    startButton.addEventListener("click", startGame);
+    inputField.addEventListener("input", checkInput);
+  </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Connector Game</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://source.unsplash.com/1920x1080/?nature,beach') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .game-container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      border: 3px solid #ffa07a;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      width: 98%;
+      max-width: 800px;
+    }
+    .title {
+      font-size: 2em;
+      margin-bottom: 15px;
+      color: #ff6347;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    .word-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .word-slot {
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.1);
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5em;
+      color: #333;
+    }
+    .circle-container {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      margin: 0 auto 20px;
+    }
+    .letter {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: #ff7f50;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .letter:hover {
+      transform: scale(1.2);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    }
+    .btn {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      color: #fff;
+      background-color: #ff4500;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin-top: 20px;
+    }
+    .btn:hover {
+      background-color: #e63900;
+      transform: scale(1.1);
+    }
+    .btn:active {
+      transform: scale(1);
+    }
+    .error {
+      color: #dc143c;
+      margin-top: 15px;
+      font-size: 1em;
+      font-style: italic;
+    }
+    .hint {
+ margin-top: 10px;
+      font-size: 1.2em;
+      font-style: italic;
+      color: #32cd32;
+    }
+
+    .exit-btn {
+            font-size: 20px;
+            color: #fff;
+            background-color: #10002b;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0 .3s;
+            text-decoration: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="title">Word Connector Game</div>
+    <div class="word-grid" id="word-grid">
+      <div class="word-slot"></div>
+      <div class="word-slot"></div>
+      <div class="word-slot"></div>
+      <div class="word-slot"></div>
+      <div class="word-slot"></div>
+      <div class="word-slot"></div>
+    </div>
+    <div class="circle-container" id="circle-container"></div>
+    <button class="btn" onclick="submitWord()">Submit Word</button>
+    <div class="hint" id="hint-message"></div>
+    <div class="error" id="error-message"></div>
+  </div>
+
+  <a href="game.html" class="exit-btn">Exit</a>
+
+  <script>
+    let validWords = ["how", "who", "wow", "hi", "hello", "now", "win", "dog", "cat", "bat", "rat", "hat"];
+    const allLetters = "abcdefghijklmnopqrstuvwxyz";
+    let selectedWord = "";
+    const positions = [];
+    let currentWord = "";
+
+    function generateCircularPositions(radius, centerX, centerY, count) {
+      for (let i = 0; i < count; i++) {
+        const angle = (2 * Math.PI * i) / count; // Calculate angle for each position
+        const x = centerX + radius * Math.cos(angle); // X-coordinate
+        const y = centerY + radius * Math.sin(angle); // Y-coordinate
+        positions.push({ x: x, y: y });
+      }
+    }
+
+    // Generate positions for 8 items in a circular layout
+    generateCircularPositions(100, 125, 125, 8);
+
+    function generateLetters() {
+      const circleContainer = document.getElementById("circle-container");
+      circleContainer.innerHTML = "";
+
+      // Select a random word from the list
+      currentWord = validWords[Math.floor(Math.random() * validWords.length)];
+      const wordLetters = currentWord.toUpperCase().split("");
+
+      // Add extra random letters (set to 3)
+      while (wordLetters.length < 8) {
+        const randomLetter = allLetters[Math.floor(Math.random() * allLetters.length)].toUpperCase();
+        if (!wordLetters.includes(randomLetter)) {
+          wordLetters.push(randomLetter);
+        }
+      }
+
+      // Shuffle letters
+      const shuffledLetters = wordLetters.sort(() => Math.random() - 0.5);
+
+      for (let i = 0; i < shuffledLetters.length; i++) {
+        const letter = shuffledLetters[i];
+        const letterElement = document.createElement("div");
+        letterElement.textContent = letter;
+        letterElement.className = "letter";
+        letterElement.style.left = `${positions[i].x}px`;
+        letterElement.style.top = `${positions[i].y}px`;
+        letterElement.onclick = () => selectLetter(letter, letterElement);
+        circleContainer.appendChild(letterElement);
+      }
+
+      // Display hint
+      displayHint();
+    }
+
+    function displayHint() {
+      const hintMessage = document.getElementById("hint-message");
+      const hint = currentWord.length === 3 ? "Hint: A three-letter word" : "Hint: A longer word!";
+      hintMessage.textContent = hint;
+    }
+
+    function selectLetter(letter, element) {
+      const wordSlots = document.querySelectorAll(".word-slot");
+      for (const slot of wordSlots) {
+        if (slot.textContent === "") {
+          slot.textContent = letter;
+          selectedWord += letter;
+          element.style.visibility = "hidden";
+          break;
+        }
+      }
+    }
+
+    function submitWord() {
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.textContent = "";
+
+      if (validWords.includes(selectedWord.toLowerCase())) {
+        alert(`Congrats! You formed the word: ${selectedWord}`);
+        validWords = validWords.filter(word => word.toLowerCase() !== selectedWord.toLowerCase());
+        if (validWords.length === 0) {
+          alert("You completed all the words! Resetting the game.");
+          validWords = ["how", "who", "wow", "hi", "hello", "now", "win", "dog", "cat", "bat", "rat", "hat"]; // Reset the words
+        }
+        resetGame();
+      } else {
+        errorMessage.textContent = "Invalid word! Try again.";
+        resetGame();
+      }
+    }
+
+    function resetGame() {
+      selectedWord = "";
+      const wordSlots = document.query
+      .querySelectorAll(".word-slot");
+      for (const slot of wordSlots) {
+        slot.textContent = "";
+      }
+      generateLetters();
+    }
+
+    // Add an event listener for the Enter key
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        submitWord(); // Call the submitWord function when Enter is pressed
+      }
+    });
+
+    // Initialize the game
+    generateLetters();
+  </script>
+
+</body>
+</html>

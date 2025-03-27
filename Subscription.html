@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Kids Subscription</title>
+    <link rel="stylesheet" href="css/sub.css">
+    <link rel="stylesheet" href="css/othernev.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="glass-nav">
+    <!-- <button class="hamburger"><i class="fas fa-bars"></i></button> -->
+    <div class="logo">
+        <a href="index.html"><h1>Color<span>Craze</span></h1></a>
+     </div>
+    <ul class="nav-links">
+        <li><a href="login-form.html"><i class="fas fa-user"></i> Login</a></li>
+        <li><a href="Subscription.html"><i class="fas fa-newspaper"></i> Subscription</a></li>
+        <li><a href="about-page.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+        <li><a href="feedback-page.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+    </ul>
+</nav>
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">KidsFun</h1>
+            <p class="subtitle">Join our amazing adventure!</p>
+            
+            <!-- Floating elements -->
+            <div class="cloud cloud1 floating"></div>
+            <div class="cloud cloud2 floating"></div>
+            <div class="star star1 floating"></div>
+            <div class="star star2 floating"></div>
+            <div class="star star3 floating"></div>
+        </div>
+        
+        <div class="subscription-form">
+            <h2 class="form-title">Join Our Fun Club!</h2>
+            <div class="form-group">
+                <label for="name" class="form-label">Your Name</label>
+                <input type="text" id="name" class="form-input" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="parent-email" class="form-label">Parent's Email</label>
+                <input type="email" id="parent-email" class="form-input" placeholder="Enter parent's email">
+            </div>
+            <div class="form-group">
+                <label for="age" class="form-label">Your Age</label>
+                <input type="number" id="age" class="form-input" min="1" max="18" placeholder="How old are you?">
+            </div>
+            
+            <button id="subscribe-btn" class="form-button">Let's Go!</button>
+            
+            <!-- Character animation -->
+            <div class="character">
+                <div class="character-body">
+                    <div class="character-eye character-eye-left"></div>
+                    <div class="character-eye character-eye-right"></div>
+                    <div class="character-mouth"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="plans">
+            <div class="plan-card plan-basic">
+                <h3 class="plan-name">Basic Plan</h3>
+                <p class="plan-price">$5/month</p>
+                <ul class="plan-features">
+                    <li>Access to games</li>
+                    <li>Monthly newsletter</li>
+                    <li>Fun activities</li>
+                </ul>
+                <button class="plan-button">Choose</button>
+            </div>
+            
+            <div class="plan-card plan-premium">
+                <h3 class="plan-name">Premium Plan</h3>
+                <p class="plan-price">$10/month</p>
+                <ul class="plan-features">
+                    <li>All Basic features</li>
+                    <li>Exclusive content</li>
+                    <li>Learning materials</li>
+                    <li>Special events</li>
+                </ul>
+                <button class="plan-button">Choose</button>
+            </div>
+            
+            <div class="plan-card plan-family">
+                <h3 class="plan-name">Family Plan</h3>
+                <p class="plan-price">$15/month</p>
+                <ul class="plan-features">
+                    <li>All Premium features</li>
+                    <li>Up to 4 kids</li>
+                    <li>Parent dashboard</li>
+                    <li>Personalized content</li>
+                </ul>
+                <button class="plan-button">Choose</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Thank you modal -->
+    <div id="thank-you-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="thank-you-title">Yay! Thank You!</h2>
+            <p class="thank-you-message">We're so excited to have you join our fun club! Your adventure begins now!</p>
+            <div id="confetti-container"></div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form submission
+            const subscribeBtn = document.getElementById('subscribe-btn');
+            const modal = document.getElementById('thank-you-modal');
+            const closeModal = document.querySelector('.close-modal');
+            const planButtons = document.querySelectorAll('.plan-button');
+            
+            // Subscribe button click
+            subscribeBtn.addEventListener('click', function() {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('parent-email').value;
+                const age = document.getElementById('age').value;
+                
+                if (name && email && age) {
+                    showModal();
+                    createConfetti();
+                } else {
+                    alert('Please fill in all fields to join our fun club!');
+                }
+            });
+            
+            // Plan buttons click
+            planButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const planName = this.parentElement.querySelector('.plan-name').textContent;
+                    alert(`You've selected the ${planName}! Please fill in your details to continue.`);
+                    document.querySelector('.subscription-form').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Show modal
+            function showModal() {
+                modal.style.display = 'flex';
+            }
+            
+            // Create confetti
+            function createConfetti() {
+                const confettiContainer = document.getElementById('confetti-container');
+                confettiContainer.innerHTML = '';
+                
+                const colors = ['#ff6b6b', '#6a5acd', '#4cc9f0', '#f72585', '#7209b7', '#ffd166'];
+                
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = Math.random() * 100 + '%';
+                    confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                    
+                    // Random shapes
+                    const shapeTypes = ['circle', 'square', 'triangle'];
+                    const shape = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+                    
+                    if (shape === 'circle') {
+                        confetti.style.borderRadius = '50%';
+                    } else if (shape === 'triangle') {
+                        confetti.style.width = '0';
+                        confetti.style.height = '0';
+                        confetti.style.backgroundColor = 'transparent';
+                        confetti.style.borderLeft = '5px solid transparent';
+                        confetti.style.borderRight = '5px solid transparent';
+                        confetti.style.borderBottom = '10px solid ' + colors[Math.floor(Math.random() * colors.length)];
+                    }
+                    
+                    confettiContainer.appendChild(confetti);
+                    
+                    // Animate each confetti
+                    animateConfetti(confetti);
+                }
+            }
+            
+            function animateConfetti(confetti) {
+                const animationDuration = 1 + Math.random() * 2;
+                const animationDelay = Math.random();
+                
+                confetti.style.animation = `
+                    fallDown ${animationDuration}s ease-in ${animationDelay}s forwards,
+                    sideWays ${animationDuration * 0.5}s ease-in-out ${animationDelay}s infinite alternate
+                `;
+                
+                // Add keyframes for confetti animations
+                if (!document.getElementById('confetti-keyframes')) {
+                    const style = document.createElement('style');
+                    style.id = 'confetti-keyframes';
+                    style.innerHTML = `
+                        @keyframes fallDown {
+                            0% {
+                                transform: translateY(-100px) rotate(0deg);
+                                opacity: 1;
+                            }
+                            100% {
+                                transform: translateY(100px) rotate(360deg);
+                                opacity: 0;
+                            }
+                        }
+                        
+                        @keyframes sideWays {
+                            0% {
+                                transform: translateX(-10px) rotate(0deg);
+                            }
+                            100% {
+                                transform: translateX(10px) rotate(180deg);
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+            
+            // Animate eyes to follow cursor
+            const eyes = document.querySelectorAll('.character-eye');
+            
+            document.addEventListener('mousemove', function(e) {
+                eyes.forEach(eye => {
+                    const eyeRect = eye.getBoundingClientRect();
+                    const eyeCenterX = eyeRect.left + eyeRect.width / 2;
+                    const eyeCenterY = eyeRect.top + eyeRect.height / 2;
+                    
+                    const mouseX = e.clientX;
+                    const mouseY = e.clientY;
+                    
+                    const angle = Math.atan2(mouseY - eyeCenterY, mouseX - eyeCenterX);
+                    const distance = Math.min(3, Math.sqrt(Math.pow(mouseX - eyeCenterX, 2) + Math.pow(mouseY - eyeCenterY, 2)) / 30);
+                    
+                    const pupil = eye.querySelector(':after');
+                    if (pupil) {
+                        pupil.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+                    }
+                });
+            });
+            
+            // Input animation
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

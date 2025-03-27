@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register</title>
+   <link rel="stylesheet" href="css/login.css">
+   <link rel="stylesheet" href="css/othernev.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+ <!-- Navigation Bar -->
+ <nav class="glass-nav">
+   <!-- <button class="hamburger"><i class="fas fa-bars"></i></button> -->
+   <div class="logo">
+      <a href="index.html"><h1>Color<span>Craze</span></h1></a>
+   </div>
+   <ul class="nav-links">
+    <li><a href="login-form.html"><i class="fas fa-user"></i> Login</a></li>
+    <li><a href="Subscription.html"><i class="fas fa-newspaper"></i> Subscription</a></li>
+    <li><a href="about-page.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+    <li><a href="feedback-page.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+   </ul>
+   
+</nav>
+    <!-- Floating elements -->
+    <div class="float-element star" style="top: 10%; left: 10%;"></div>
+    <div class="float-element cloud" style="top: 20%; right: 15%;"></div>
+    <div class="float-element heart" style="bottom: 10%; left: 20%;"></div>
+    <div class="float-element star" style="bottom: 20%; right: 10%;"></div>
+    
+    <div class="container">
+        <!-- Login Form -->
+        <div class="form-container login-container">
+            <!-- Login Character - MOVED INSIDE LOGIN CONTAINER -->
+            <div class="character login-character">
+                <div class="character-body">
+                    <div class="character-ear character-ear-left"></div>
+                    <div class="character-ear character-ear-right"></div>
+                    <div class="character-eye character-eye-left">
+                        <div class="character-pupil"></div>
+                    </div>
+                    <div class="character-eye character-eye-right">
+                        <div class="character-pupil"></div>
+                    </div>
+                    <div class="character-mouth"></div>
+                </div>
+            </div>
+            
+            <div class="speech-bubble login-speech">
+                Welcome back! Please log in to continue your adventure!
+            </div>
+            
+            <h1 class="form-title">Hello, Friend!</h1>
+            <form id="login-form">
+                <div class="input-group">
+                    <label class="input-label" for="login-email">Email</label>
+                    <input type="email" id="login-email" class="input-field" placeholder="Enter your email">
+                    <div class="input-icon">✉️</div>
+                    <div class="error-message" id="login-email-error">Please enter a valid email address</div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label" for="login-password">Password</label>
+                    <input type="password" id="login-password" class="input-field" placeholder="Enter your password">
+                    <div class="input-icon">🔒</div>
+                    <div class="error-message" id="login-password-error">Password must be at least 6 characters</div>
+                </div>
+                
+                <button type="submit" class="button">Login</button>
+                
+                <div class="switch-form">
+                    Don't have an account? <span class="switch-btn" id="switch-to-register">Register here</span>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Register Form -->
+        <div class="form-container register-container">
+            <!-- Register Character - MOVED INSIDE REGISTER CONTAINER -->
+            <div class="character register-character">
+                <div class="character-body">
+                    <div class="character-ear character-ear-left"></div>
+                    <div class="character-ear character-ear-right"></div>
+                    <div class="character-eye character-eye-left">
+                        <div class="character-pupil"></div>
+                    </div>
+                    <div class="character-eye character-eye-right">
+                        <div class="character-pupil"></div>
+                    </div>
+                    <div class="character-mouth"></div>
+                </div>
+            </div>
+            
+            <div class="speech-bubble register-speech">
+                Join us for tons of fun and learning adventures!
+            </div>
+            
+            <h1 class="form-title">Join The Fun!</h1>
+            <form id="register-form">
+                <div class="input-group">
+                    <label class="input-label" for="register-name">Name</label>
+                    <input type="text" id="register-name" class="input-field" placeholder="Enter your name">
+                    <div class="input-icon">👤</div>
+                    <div class="error-message" id="register-name-error">Please enter your name</div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label" for="register-email">Email</label>
+                    <input type="email" id="register-email" class="input-field" placeholder="Enter your email">
+                    <div class="input-icon">✉️</div>
+                    <div class="error-message" id="register-email-error">Please enter a valid email address</div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label" for="register-password">Password</label>
+                    <input type="password" id="register-password" class="input-field" placeholder="Create a password">
+                    <div class="input-icon">🔒</div>
+                    <div class="error-message" id="register-password-error">Password must be at least 6 characters</div>
+                    <div class="password-strength">
+                        <div class="strength-bar" id="strength-1"></div>
+                        <div class="strength-bar" id="strength-2"></div>
+                        <div class="strength-bar" id="strength-3"></div>
+                    </div>
+                    <div class="strength-text" id="strength-text">Password strength</div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label" for="register-confirm">Confirm Password</label>
+                    <input type="password" id="register-confirm" class="input-field" placeholder="Confirm your password">
+                    <div class="input-icon">🔒</div>
+                    <div class="error-message" id="register-confirm-error">Passwords do not match</div>
+                </div>
+                
+                <button type="submit" class="button">Register</button>
+                
+                <div class="switch-form">
+                    Already have an account? <span class="switch-btn" id="switch-to-login">Login here</span>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="success-message" id="success-message">
+        Success! 🎉
+    </div>
+    
+    <script>
+        // Get DOM elements
+        const container = document.querySelector('.container');
+        const switchToRegister = document.getElementById('switch-to-register');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const successMessage = document.getElementById('success-message');
+        
+        // Character elements and pupils
+        const pupils = document.querySelectorAll('.character-pupil');
+        const loginCharacter = document.querySelector('.login-character');
+        const registerCharacter = document.querySelector('.register-character');
+        
+        // Switch between forms
+        switchToRegister.addEventListener('click', () => {
+            container.classList.add('flip');
+        });
+        
+        switchToLogin.addEventListener('click', () => {
+            container.classList.remove('flip');
+        });
+        
+        // Make eyes follow cursor
+        document.addEventListener('mousemove', (e) => {
+            pupils.forEach(pupil => {
+                const rect = pupil.parentElement.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / 30;
+                const y = (e.clientY - rect.top) / 30;
+                
+                pupil.style.transform = `translate(${Math.min(Math.max(x, -1), 1) * 3}px, ${Math.min(Math.max(y, -1), 1) * 3}px)`;
+            });
+        });
+        
+        // Animate characters based on form focus
+        const inputFields = document.querySelectorAll('.input-field');
+        
+        inputFields.forEach(input => {
+            input.addEventListener('focus', () => {
+                if (container.classList.contains('flip')) {
+                    registerCharacter.style.transform = 'translateY(-20px)';
+                } else {
+                    loginCharacter.style.transform = 'translateY(-20px)';
+                }
+            });
+            
+            input.addEventListener('blur', () => {
+                loginCharacter.style.transform = 'translateY(0)';
+                registerCharacter.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Login form validation
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Email validation
+            const loginEmail = document.getElementById('login-email');
+            const loginEmailError = document.getElementById('login-email-error');
+            
+            if (!validateEmail(loginEmail.value)) {
+                loginEmail.classList.add('error');
+                loginEmailError.style.display = 'block';
+                isValid = false;
+            } else {
+                loginEmail.classList.remove('error');
+                loginEmailError.style.display = 'none';
+            }
+            
+            // Password validation
+            const loginPassword = document.getElementById('login-password');
+            const loginPasswordError = document.getElementById('login-password-error');
+            
+            if (loginPassword.value.length < 6) {
+                loginPassword.classList.add('error');
+                loginPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                loginPassword.classList.remove('error');
+                loginPasswordError.style.display = 'none';
+            }
+            
+            // Submit if valid
+            if (isValid) {
+                showSuccessMessage("Login successful! 🎉");
+                loginForm.reset();
+            }
+        });
+        
+        // Register form validation
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Name validation
+            const registerName = document.getElementById('register-name');
+            const registerNameError = document.getElementById('register-name-error');
+            
+            if (registerName.value.trim() === '') {
+                registerName.classList.add('error');
+                registerNameError.style.display = 'block';
+                isValid = false;
+            } else {
+                registerName.classList.remove('error');
+                registerNameError.style.display = 'none';
+            }
+            
+            // Email validation
+            const registerEmail = document.getElementById('register-email');
+            const registerEmailError = document.getElementById('register-email-error');
+            
+            if (!validateEmail(registerEmail.value)) {
+                registerEmail.classList.add('error');
+                registerEmailError.style.display = 'block';
+                isValid = false;
+            } else {
+                registerEmail.classList.remove('error');
+                registerEmailError.style.display = 'none';
+            }
+            
+            // Password validation
+            const registerPassword = document.getElementById('register-password');
+            const registerPasswordError = document.getElementById('register-password-error');
+            
+            if (registerPassword.value.length < 6) {
+                registerPassword.classList.add('error');
+                registerPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                registerPassword.classList.remove('error');
+                registerPasswordError.style.display = 'none';
+            }
+            
+            // Confirm password validation
+            const registerConfirm = document.getElementById('register-confirm');
+            const registerConfirmError = document.getElementById('register-confirm-error');
+            
+            if (registerConfirm.value !== registerPassword.value) {
+                registerConfirm.classList.add('error');
+                registerConfirmError.style.display = 'block';
+                isValid = false;
+            } else {
+                registerConfirm.classList.remove('error');
+                registerConfirmError.style.display = 'none';
+            }
+            
+            // Submit if valid
+            if (isValid) {
+                showSuccessMessage("Registration successful! 🎉");
+                registerForm.reset();
+                resetPasswordStrength();
+            }
+        });
+        
+        // Password strength meter
+        const registerPassword = document.getElementById('register-password');
+        const strengthBars = [
+            document.getElementById('strength-1'),
+            document.getElementById('strength-2'),
+            document.getElementById('strength-3')
+        ];
+        const strengthText = document.getElementById('strength-text');
+        
+        registerPassword.addEventListener('input', () => {
+            const password = registerPassword.value;
+            let strength = 0;
+            
+            // Reset bars
+            strengthBars.forEach(bar => {
+                bar.style.backgroundColor = '#e0e0e0';
+            });
+            
+            if (password.length >= 6) {
+                strength++;
+            }
+            
+            if (password.length >= 8 && /[A-Z]/.test(password)) {
+                strength++;
+            }
+            
+            if (password.length >= 8 && /[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) {
+                strength++;
+            }
+            
+            // Update strength bars
+            for (let i = 0; i < strength; i++) {
+                if (i === 0) strengthBars[i].style.backgroundColor = '#ff6b6b';
+                if (i === 1) strengthBars[i].style.backgroundColor = '#ffe66d';
+                if (i === 2) strengthBars[i].style.backgroundColor = '#7ed957';
+            }
+            
+            // Update strength text
+            if (strength === 0) strengthText.textContent = 'Password strength';
+            if (strength === 1) strengthText.textContent = 'Weak';
+            if (strength === 2) strengthText.textContent = 'Medium';
+            if (strength === 3) strengthText.textContent = 'Strong';
+        });
+        
+        // Helper functions
+        function validateEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+        
+        function showSuccessMessage(message) {
+            successMessage.textContent = message;
+            successMessage.classList.add('show');
+            
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 3000);
+        }
+        
+        function resetPasswordStrength() {
+            strengthBars.forEach(bar => {
+                bar.style.backgroundColor = '#e0e0e0';
+            });
+            strengthText.textContent = 'Password strength';
+        }
+        
+        // Add button ripple effect
+        const buttons = document.querySelectorAll('.button');
+        
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.width = '1px';
+                ripple.style.height = '1px';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(100);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

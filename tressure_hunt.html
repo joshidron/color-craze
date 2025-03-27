@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Hunt Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .game-container {
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(5, 80px);
+            gap: 15px;
+            justify-content: center;
+        }
+        .cell {
+            width: 80px;
+            height: 80px;
+            background: #f4f4f4;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .cell:hover {
+            transform: scale(1.1);
+            background-color: #e0e0e0;
+        }
+        .cell.found {
+            background-color: #4caf50;
+            color: #fff;
+            animation: sparkle 1s ease-in-out;
+        }
+        .cell.wrong {
+            background-color: #f44336;
+            color: #fff;
+            animation: shake 0.5s;
+        }
+        .score {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .exit-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .exit-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .game-over, .congratulations {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 30px 50px;
+            font-size: 2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .game-over {
+            background-color: #f44336;
+        }
+
+        .congratulations {
+            background-color: #4caf50;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Treasure Hunt Game</h1>
+    <p class="score">Score: <span id="score">0</span></p>
+    <div class="game-container" id="gameBoard"></div>
+    <a href="game.html" class="exit-button">Exit</a>
+    <div class="game-over" id="gameOverMessage" style="display: none;">Game Over! <br> You lost! Try again!</div>
+    <div class="congratulations" id="congratulationsMessage" style="display: none;">Congratulations! <br> You found the treasure!</div>
+
+    <script>
+        const gameBoard = document.getElementById('gameBoard');
+        const scoreDisplay = document.getElementById('score');
+        const gameOverMessage = document.getElementById('gameOverMessage');
+        const congratulationsMessage = document.getElementById('congratulationsMessage');
+        let score = 0;
+        let attempts = 0;
+        let treasureFound = false;
+
+        // Function to restart the game
+        function restartGame() {
+            score = 0;
+            attempts = 0;
+            treasureFound = false;
+            scoreDisplay.textContent = score;
+            gameOverMessage.style.display = 'none'; // Hide the game over message
+            congratulationsMessage.style.display = 'none'; // Hide the congratulations message
+            gameBoard.innerHTML = ''; // Clear previous game board
+
+            // Generate new random treasure location
+            const treasureIndex = Math.floor(Math.random() * 25);
+
+            // Create grid cells again
+            for (let i = 0; i < 20; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.index = i;
+
+                cell.addEventListener('click', function () {
+                    if (this.classList.contains('found') || this.classList.contains('wrong')) {
+                        return; // Prevent clicking the same cell multiple times
+                    }
+
+                    attempts++;
+
+                    if (parseInt(this.dataset.index) === treasureIndex) {
+                        this.classList.add('found');
+                        this.textContent = '💎';
+                        score += 10;
+                        scoreDisplay.textContent = score;
+                        treasureFound = true;
+                        congratulationsMessage.style.display = 'block'; // Show congratulations message
+                        return;
+                    } else {
+                        this.classList.add('wrong');
+                        this.textContent = '❌';
+                    }
+
+                    // Check if attempts exceed the limit
+                    if (attempts >= 7 && !treasureFound) {
+                        gameOverMessage.style.display = 'block'; // Show game over message
+                    }
+                });
+
+                gameBoard.appendChild(cell);
+            }
+        }
+
+        // Restart game when clicking anywhere on game over or congratulations message
+        gameOverMessage.addEventListener('click', restartGame);
+        congratulationsMessage.addEventListener('click', restartGame);
+
+        // Start the game
+        restartGame();
+    </script>
+</body>
+</html>

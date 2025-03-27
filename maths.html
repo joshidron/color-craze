@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* General Body Styling */
+/* Body Styling with Animated Gradient Background */
+body {
+    font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+    background-size: 400% 400%;
+    animation: gradientAnimation 8s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Gradient Animation */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+/* Container Styling with Linear Animation */
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    border: 3px solid #ff9a9e;
+    animation: containerBounce 4s infinite ease-in-out;
+}
+
+/* Container Bounce Animation */
+@keyframes containerBounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+
+/* Header */
+h1 {
+    color: #ff6f61;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    font-size: 2.5rem;
+}
+
+/* Buttons */
+button {
+    padding: 12px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fbc2eb, #a18cd1);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Feedback Section */
+#feedback {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
+    animation: fadeIn 1s;
+}
+
+.feedback-correct {
+    color: #4CAF50;
+    animation: bounceIn 0.5s;
+}
+
+.feedback-wrong {
+    color: #f44336;
+    animation: shake 0.5s;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.2); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* Difficulty Selector */
+#difficultySelector {
+    margin: 20px 0;
+    padding: 15px;
+    background: #ffeaa7;
+    border-radius: 15px;
+    animation: fadeIn 0.5s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#difficultySelector h3 {
+    color: #ff6f61;
+    margin-bottom: 10px;
+}
+
+/* Options */
+.option {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.option:hover {
+    background-color: #ffeaa7;
+    transform: scale(1.05);
+}
+
+/* Question Area */
+#question img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 10px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+#question img:hover {
+    transform: scale(1.1);
+}
+
+/* Score */
+#score {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #ff6f61;
+}
+
+/* Input Field */
+#answer {
+    width: 80%;
+    padding: 12px;
+    margin: 10px auto;
+    border: 2px solid #ff6f61;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #555;
+    background: #fffdf0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    outline: none;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+#answer:focus {
+    border-color: #ff9a9e;
+    box-shadow: 0 0 8px #ff9a9e;
+    transform: scale(1.02);
+}
+
+#answer::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff6666;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #ff3333;
+}
+.exit-btn {
+            font-size: 20px;
+            color: #fff;
+            background: linear-gradient(135deg, #fbc2eb, #a18cd1);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0 .3s;
+            text-decoration: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+    </style>
+    <title>Math Game</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Math Quiz Game</h1>
+        <div id="modeSelection">
+            <button onclick="selectMode('arithmetic')">Arithmetic</button>
+            <button onclick="selectMode('theory')">Theory Q&A</button>
+            <button onclick="selectMode('picture')">Picture Quiz</button>
+            <a href="game.html" class="exit-btn">Exit</a>
+        </div>
+      
+        
+
+        <div id="difficultySelector" class="hidden">
+            <h3>Select Difficulty:</h3>
+            <button onclick="setDifficulty('easy')">Easy</button>
+            <button onclick="setDifficulty('medium')">Medium</button>
+            <button onclick="setDifficulty('hard')">Hard</button>
+        </div>
+        <div id="gameArea" class="hidden">
+            <button id="backButton" class="back-button" onclick="goBack()">Back</button>
+            <div id="difficultySelector" class="hidden">
+                <button onclick="setDifficulty('easy')">Easy</button>
+                <button onclick="setDifficulty('medium')">Medium</button>
+                <button onclick="setDifficulty('hard')">Hard</button>
+            </div>
+            <div id="questionArea">
+                <p id="question"></p>
+                <input type="text" id="answer" placeholder="Enter your answer" />
+                <button id="submit">Submit</button>
+                <p id="feedback"></p>
+                <p id="score">Score: 0</p>
+            </div>
+        </div>
+        
+    </div>
+    <audio id="correctSound" src="sounds/correct.mp3" preload="auto"></audio>
+    <audio id="wrongSound" src="sounds/wrong.mp3" preload="auto"></audio>
+    <audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
+    <script>
+        let score = 0;
+let currentQuestion;
+let currentMode;
+let difficulty = 'easy';
+
+// Sound effects
+const sounds = {
+    correct: new Audio('sounds/correct.mp3'),
+    wrong: new Audio('sounds/wrong.mp3'),
+    buttonClick: new Audio('sounds/click.mp3')
+};
+
+function playSound(soundName) {
+    try {
+        sounds[soundName].currentTime = 0;
+        sounds[soundName].play();
+    } catch (error) {
+        console.log('Audio not loaded yet');
+    }
+}
+
+function selectMode(mode) {
+    playSound('buttonClick');
+    currentMode = mode;
+    document.getElementById('modeSelection').classList.add('hidden');
+    document.getElementById('gameArea').classList.remove('hidden');
+    
+    // Show difficulty selector only for arithmetic mode
+    if (mode === 'arithmetic') {
+        document.getElementById('difficultySelector').classList.remove('hidden');
+    } else {
+        document.getElementById('difficultySelector').classList.add('hidden');
+    }
+    generateQuestion();
+}
+
+function setDifficulty(level) {
+    difficulty = level;
+    generateQuestion();
+}
+
+function generateQuestion() {
+    const questionElement = document.getElementById('question');
+    const answerElement = document.getElementById('answer');
+    const feedbackElement = document.getElementById('feedback');
+    const scoreElement = document.getElementById('score');
+
+    answerElement.value = '';
+    feedbackElement.innerText = '';
+
+    if (currentMode === 'arithmetic') {
+        let num1, num2, operator;
+        
+        switch(difficulty) {
+            case 'easy':
+                num1 = Math.floor(Math.random() * 10);
+                num2 = Math.floor(Math.random() * 10);
+                operator = ['+', '-'][Math.floor(Math.random() * 2)];
+                break;
+            case 'medium':
+                num1 = Math.floor(Math.random() * 20);
+                num2 = Math.floor(Math.random() * 20);
+                operator = ['+', '-', '*'][Math.floor(Math.random() * 3)];
+                break;
+            case 'hard':
+                num1 = Math.floor(Math.random() * 50);
+                num2 = Math.floor(Math.random() * 25);
+                operator = ['+', '-', '*', '/'][Math.floor(Math.random() * 4)];
+                break;
+        }
+
+        currentQuestion = {
+            question: `${num1} ${operator} ${num2}`,
+            answer: eval(`${num1} ${operator} ${num2}`).toFixed(2)
+        };
+        questionElement.innerText = currentQuestion.question;
+
+    } else if (currentMode === 'theory') {
+        const questions = [
+            { question: "What is 2 + 2?", options: ["3", "4", "5", "6"], answer: "4" },
+            { question: "What is the capital of France?", options: ["Berlin", "Madrid", "Paris", "Rome"], answer: "Paris" },
+            // Additional questions...
+        ];
+        const randomIndex = Math.floor(Math.random() * questions.length);
+        currentQuestion = questions[randomIndex];
+        questionElement.innerText = currentQuestion.question;
+
+        // Create buttons for options
+        const optionsHTML = currentQuestion.options.map(option => {
+            return `<button class="option" onclick="checkTheoryAnswer('${option}')">${option}</button>`;
+        }).join('');
+        questionElement.innerHTML += `<div class="options">${optionsHTML}</div>`;
+
+    } else if (currentMode === 'picture') {
+        const pictures = [
+            { image: "images/balls.jpg", question: "How many balls are in the basket?", answer: "5" },
+            { image: "images/apples.jpg", question: "How many apples are there?", answer: "3" },
+            // Additional picture questions...
+        ];
+        const randomIndex = Math.floor(Math.random() * pictures.length);
+        currentQuestion = pictures[randomIndex];
+        questionElement.innerHTML = `<img src="${currentQuestion.image}" alt="Question Image" class="question-image" />`;
+        questionElement.innerHTML += `<p>${currentQuestion.question}</p>`;
+    }
+}
+
+function checkTheoryAnswer(selectedAnswer) {
+    const feedbackElement = document.getElementById('feedback');
+    const scoreElement = document.getElementById('score');
+
+    if (selectedAnswer === currentQuestion.answer) {
+        score++;
+        playSound('correct');
+        feedbackElement.innerText = 'Correct!';
+        feedbackElement.className = 'feedback-correct';
+    } else {
+        playSound('wrong');
+        feedbackElement.innerText = `Wrong! The correct answer is ${currentQuestion.answer}.`;
+        feedbackElement.className = 'feedback-wrong';
+    }
+    scoreElement.innerText = `Score: ${score}`;
+    setTimeout(generateQuestion, 1500);
+}
+
+function submitAnswer() {
+    const answerElement = document.getElementById('answer');
+    const feedbackElement = document.getElementById('feedback');
+    const scoreElement = document.getElementById('score');
+    
+    let userAnswer = answerElement.value.trim();
+    let correctAnswer = currentQuestion.answer.toString();
+
+    if (currentMode === 'arithmetic' || currentMode === 'picture') {
+        userAnswer = parseFloat(userAnswer).toFixed(2);
+        if (userAnswer === correctAnswer) {
+            score++;
+            playSound('correct');
+            feedbackElement.innerText = 'Correct!';
+            feedbackElement.className = 'feedback-correct';
+        } else {
+            playSound('wrong');
+            feedbackElement.innerText = `Wrong! The correct answer is ${correctAnswer}`;
+            feedbackElement.className = 'feedback-wrong';
+        }
+        scoreElement.innerText = `Score: ${score}`;
+        setTimeout(generateQuestion, 1500);
+        answerElement.value = '';
+    }
+}
+
+// Event listener for Enter key
+document.getElementById('answer').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        submitAnswer();
+    }
+});
+
+// Event listener for Submit button
+document.getElementById('submit').addEventListener('click', submitAnswer);
+
+function goBack() {
+    playSound('buttonClick');
+    // Reset mode-specific settings
+    currentMode = null;
+    difficulty = 'easy';
+    score = 0;
+
+    // Reset UI
+    document.getElementById('gameArea').classList.add('hidden');
+    document.getElementById('modeSelection').classList.remove('hidden');
+    document.getElementById('difficultySelector').classList.add('hidden');
+
+    // Clear feedback and score
+    document.getElementById('feedback').innerText = '';
+    document.getElementById('score').innerText = 'Score: 0';
+}
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="css/aboutus.css">
+    <link rel="stylesheet" href="css/othernev.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="glass-nav">
+    <!-- <button class="hamburger"><i class="fas fa-bars"></i></button> -->
+    <div class="logo">
+        <a href="index.html"><h1>Color<span>Craze</span></h1></a>
+     </div>
+    <ul class="nav-links">
+        <li><a href="login-form.html"><i class="fas fa-user"></i> Login</a></li>
+        <li><a href="Subscription.html"><i class="fas fa-newspaper"></i> Subscription</a></li>
+        <li><a href="about-page.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+        <li><a href="feedback-page.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+    </ul>
+    
+</nav>
+
+    <div class="container">
+        <header>
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            <div class="cloud cloud-3"></div>
+            <h1 class="title">About Us</h1>
+            <p class="subtitle">Get to know our awesome team!</p>
+        </header>
+        
+        <section class="section" id="our-story">
+            <h2 class="section-title">Our Story</h2>
+            <div class="content-placeholder">
+                It all started with a passion for inspiring young minds. As educators and parents, we saw the need for a platform where kids could learn, create, and play in a secure and nurturing environment. Driven by this goal, we built Colour Craze to empower kids to unlock their full potential while having fun.
+            </div>
+        </section>
+        
+        <section class="section" id="our-mission">
+            <h2 class="section-title">Our Mission</h2>
+            <div class="content-placeholder">
+To spark curiosity, foster creativity, and make screening a joyful journey for everyone by providing a safe, engaging, and interactive platform where individuals can explore their creativity and grow their skills.
+            </div>
+        </section>
+        
+        <section class="section" id="our-team">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-container">
+                <!-- Team Member 1 -->
+                <div class="team-member">
+                    <div class="avatar">
+                        <div class="avatar-image">😊</div>
+                    </div>
+                    <div class="name">Dron Joshi</div>
+                    <div class="role">Designer & Developer</div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="team-member">
+                    <div class="avatar">
+                        <div class="avatar-image">😎</div>
+                    </div>
+                    <div class="name">Tirth Joshi</div>
+                    <div class="role">Game Developer</div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="team-member">
+                    <div class="avatar">
+                        <div class="avatar-image">🤓</div>
+                    </div>
+                    <div class="name">Naitik Joshi</div>
+                    <div class="role">Backend Developer</div>
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="team-member">
+                    <div class="avatar">
+                        <div class="avatar-image">🥳</div>
+                    </div>
+                    <div class="name">Kush Parekh</div>
+                    <div class="role">Frontend Developer</div>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="footer">
+            <p>© 2025 Kids Website. All rights reserved.</p>
+            <div class="grass"></div>
+            
+            <!-- Flowers -->
+            <div class="flower" style="left: 10%;">
+                <div class="flower-center"></div>
+                <div class="flower-petal petal-1"></div>
+                <div class="flower-petal petal-2"></div>
+                <div class="flower-petal petal-3"></div>
+                <div class="flower-petal petal-4"></div>
+                <div class="flower-stem"></div>
+            </div>
+            
+            <div class="flower" style="left: 25%;">
+                <div class="flower-center"></div>
+                <div class="flower-petal petal-1"></div>
+                <div class="flower-petal petal-2"></div>
+                <div class="flower-petal petal-3"></div>
+                <div class="flower-petal petal-4"></div>
+                <div class="flower-stem"></div>
+            </div>
+            
+            <div class="flower" style="left: 70%;">
+                <div class="flower-center"></div>
+                <div class="flower-petal petal-1"></div>
+                <div class="flower-petal petal-2"></div>
+                <div class="flower-petal petal-3"></div>
+                <div class="flower-petal petal-4"></div>
+                <div class="flower-stem"></div>
+            </div>
+            
+            <div class="flower" style="left: 85%;">
+                <div class="flower-center"></div>
+                <div class="flower-petal petal-1"></div>
+                <div class="flower-petal petal-2"></div>
+                <div class="flower-petal petal-3"></div>
+                <div class="flower-petal petal-4"></div>
+                <div class="flower-stem"></div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Interactive Character -->
+    <div class="character">
+        <div class="character-body">
+            <div class="character-eye character-eye-left">
+                <div class="character-pupil"></div>
+            </div>
+            <div class="character-eye character-eye-right">
+                <div class="character-pupil"></div>
+            </div>
+            <div class="character-mouth"></div>
+        </div>
+    </div>
+    
+    <div class="speech-bubble">
+        Hi there! Click me for fun facts about our website!
+    </div>
+    
+    <script>
+        // Animate sections on scroll
+        const sections = document.querySelectorAll('.section');
+        
+        function checkSections() {
+            const triggerBottom = window.innerHeight * 0.8;
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                
+                if (sectionTop < triggerBottom) {
+                    section.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkSections);
+        window.addEventListener('load', checkSections);
+        
+        // Interactive bubbles on mouse move
+        document.addEventListener('mousemove', function(e) {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            
+            const size = Math.random() * 30 + 10;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            
+            bubble.style.left = `${e.clientX}px`;
+            bubble.style.top = `${e.clientY}px`;
+            
+            document.body.appendChild(bubble);
+            
+            setTimeout(() => {
+                bubble.style.opacity = '0';
+                bubble.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * -100}px) scale(${Math.random() * 2})`;
+                
+                setTimeout(() => {
+                    document.body.removeChild(bubble);
+                }, 1000);
+            }, 10);
+        });
+        
+        // Interactive character
+        const character = document.querySelector('.character');
+        const speechBubble = document.querySelector('.speech-bubble');
+        const pupils = document.querySelectorAll('.character-pupil');
+        
+        const funFacts = [
+            "Did you know our website was made with love just for kids?",
+            "We have over 100 fun activities for you to explore!",
+            "Our team loves ice cream and sunny days!",
+            "This website is visited by kids from all around the world!",
+            "We started this project because we love making kids smile!"
+        ];
+        
+        let currentFact = 0;
+        
+        character.addEventListener('click', function() {
+            speechBubble.textContent = funFacts[currentFact];
+            speechBubble.classList.toggle('active');
+            
+            currentFact = (currentFact + 1) % funFacts.length;
+        });
+        
+        // Make eyes follow cursor
+        document.addEventListener('mousemove', function(e) {
+            pupils.forEach(pupil => {
+                const rect = pupil.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / 100;
+                const y = (e.clientY - rect.top) / 100;
+                
+                pupil.style.transform = `translate(${Math.min(Math.max(x, -0.5), 0.5) * 10}px, ${Math.min(Math.max(y, -0.5), 0.5) * 10}px)`;
+            });
+        });
+        
+        // Show speech bubble on page load
+        setTimeout(() => {
+            speechBubble.classList.add('active');
+            
+            setTimeout(() => {
+                speechBubble.classList.remove('active');
+            }, 5000);
+        }, 2000);
+    </script>
+</body>
+</html>

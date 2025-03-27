@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Feedback Page</title>
+    <link rel="stylesheet" href="css/feedback.css">
+    <link rel="stylesheet" href="css/othernev.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="glass-nav">
+    <!-- <button class="hamburger"><i class="fas fa-bars"></i></button> -->
+    <div class="logo">
+        <a href="index.html"><h1>Color<span>Craze</span></h1></a>
+     </div>
+    <ul class="nav-links">
+        <li><a href="login-form.html"><i class="fas fa-user"></i> Login</a></li>
+        <li><a href="Subscription.html"><i class="fas fa-newspaper"></i> Subscription</a></li>
+        <li><a href="about-page.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+        <li><a href="feedback-page.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+    </ul>
+    
+</nav>
+
+    <div class="container">
+        <!-- Decorative bubbles -->
+        <div class="bubble" style="width: 80px; height: 80px; background-color: #ff914d; top: 10%; left: 10%;"></div>
+        <div class="bubble" style="width: 40px; height: 40px; background-color: #ff5e78; top: 20%; right: 15%;"></div>
+        <div class="bubble" style="width: 60px; height: 60px; background-color: #ffde59; bottom: 15%; left: 20%;"></div>
+        <div class="bubble" style="width: 50px; height: 50px; background-color: #75dddd; bottom: 25%; right: 10%;"></div>
+        
+        <!-- Characters -->
+        <div class="character left"></div>
+        <div class="character right"></div>
+        
+        <div class="header">
+            <h1>We Want To Hear From You!</h1>
+            <p>Tell us what you think about our awesome website!</p>
+        </div>
+        
+        <form id="feedback-form">
+            <div class="form-group">
+                <label for="name">Your Email:</label>
+                <input type="text" id="name" placeholder="What should we call you?">
+            </div>
+            
+            <div class="form-group">
+                <label>How much fun did you have?</label>
+                <div class="rating">
+                    <input type="radio" name="rating" id="star5" value="5">
+                    <label for="star5">★</label>
+                    <input type="radio" name="rating" id="star4" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" name="rating" id="star3" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" name="rating" id="star2" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" name="rating" id="star1" value="1">
+                    <label for="star1">★</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>How do you feel about our website?</label>
+                <div class="emoji-select">
+                    <div class="emoji-option" data-value="love">😍</div>
+                    <div class="emoji-option" data-value="happy">😃</div>
+                    <div class="emoji-option" data-value="okay">😐</div>
+                    <div class="emoji-option" data-value="sad">😢</div>
+                    <div class="emoji-option" data-value="angry">😠</div>
+                </div>
+                <input type="hidden" id="emoji-value">
+            </div>
+            
+            <div class="form-group">
+                <label for="favorite">What was your favorite thing?</label>
+                <select id="favorite">
+                    <option value="">Choose one...</option>
+                    <option value="games">The Games</option>
+                    <option value="stories">The Stories</option>
+                    <option value="characters">The Characters</option>
+                    <option value="videos">The Videos</option>
+                    <option value="other">Something Else</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Tell us more!</label>
+                <textarea id="message" placeholder="What did you like? What could be better?"></textarea>
+            </div>
+            
+            <div class="navigation">
+                <a href="subscribe.html" class="button secondary">Go to Subscribe</a>
+                <button type="submit" class="button">Send Your Feedback!</button>
+            </div>
+        </form>
+        
+        <div class="thank-you" id="thank-you">
+            <h2>Woohoo! Thank you!</h2>
+            <p>We got your message and we're super excited!</p>
+            <div class="navigation">
+                <a href="subscribe.html" class="button secondary">Go to Subscribe</a>
+                <button class="button" id="back-btn">Give More Feedback</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Emoji selection
+        document.addEventListener("DOMContentLoaded", () => {
+    const feedbackForm = document.getElementById("feedback-form");
+    const thankYouDiv = document.getElementById("thank-you");
+    const backBtn = document.getElementById("back-btn");
+    const emojiOptions = document.querySelectorAll(".emoji-option");
+    const emojiValueInput = document.getElementById("emoji-value");
+
+    // Handle Emoji Selection
+    emojiOptions.forEach((emoji) => {
+        emoji.addEventListener("click", () => {
+            emojiOptions.forEach((e) => e.classList.remove("selected"));
+            emoji.classList.add("selected");
+            emojiValueInput.value = emoji.dataset.value;
+        });
+    });
+
+    // Form Submission with Validation
+    feedbackForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const rating = document.querySelector('input[name="rating"]:checked');
+        const favorite = document.getElementById("favorite").value;
+        const message = document.getElementById("message").value.trim();
+
+        if (!name) {
+            alert("Please enter your email.");
+            return;
+        }
+        if (!rating) {
+            alert("Please rate how much fun you had.");
+            return;
+        }
+        if (!emojiValueInput.value) {
+            alert("Please select an emoji that best describes your feeling.");
+            return;
+        }
+        if (!favorite) {
+            alert("Please select your favorite thing.");
+            return;
+        }
+        if (!message) {
+            alert("Please tell us more about your experience.");
+            return;
+        }
+
+        // Hide form and show Thank You message
+        feedbackForm.style.display = "none";
+        thankYouDiv.style.display = "block";
+
+        // Create Confetti Celebration
+        createConfetti();
+
+        // Redirect to index.html after 5 seconds
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 5000);
+    });
+
+    // Reset form when clicking "Give More Feedback"
+    backBtn.addEventListener("click", () => {
+        thankYouDiv.style.display = "none";
+        feedbackForm.style.display = "block";
+        feedbackForm.reset();
+        emojiValueInput.value = "";
+        emojiOptions.forEach((e) => e.classList.remove("selected"));
+    });
+
+    // Confetti Animation
+    function createConfetti() {
+        const colors = ["#ff5e78", "#ff914d", "#ffde59", "#75dddd", "#7986cb"];
+
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.backgroundColor =
+                colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = Math.random() * 100 + "%";
+            confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+            confetti.style.animationDelay = Math.random() * 2 + "s";
+            document.querySelector(".container").appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+    }
+
+    // Bouncing Animation for Bubbles
+    setInterval(() => {
+        document.querySelectorAll(".bubble").forEach((bubble) => {
+            const randomX = Math.random() * 10 - 5;
+            const randomY = Math.random() * 10 - 5;
+            bubble.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        });
+    }, 2000);
+});
+
+    </script>
+</body>
+</html>

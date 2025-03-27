@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>🎮 Fun Games</title>
+       <link rel="icon" href="" type="image/svg+xml">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+        <link rel="icon" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/webfonts/fa-gamepad.svg" type="image/svg+xml">
+        <link rel="stylesheet" href="css/game.css">
+        <link rel="stylesheet" href="css/nev.css">
+    </head>
+    
+<body>
+
+    <div class="glass-nav">
+        <div class="logo">
+            <span class="cc-text">CC</span>
+            <span class="full-text">
+                <span class="color">Color</span>
+                <span class="craze">Craze</span>
+            </span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="login-form.html"><i class="fas fa-user"></i> <span>Login</span></a></li>
+            <li><a href="about-page.html"><i class="fas fa-info-circle"></i> <span>About Us</span></a></li>
+            <li><a href="Subscription.html"><i class="fas fa-bell"></i> <span>Subscription</span></a></li>
+            <li><a href="feedback-page.html"><i class="fas fa-comment-dots"></i> <span>Feedback</span></a></li>
+        </ul>
+    </div>
+    
+     
+    <nav class="navbar">
+        <button class="hamburger"><i class="fas fa-bars"></i></button>
+    <ul class="navbar-nav">
+        <li><a class="nav-link" href="index.html" data-text="Home"> <i class="fas fa-home" style="color: red; transition: background 0.3s;" onmouseover="this.style.backgroundColor='lightpink'" onmouseout="this.style.backgroundColor=''"> </i> </a> </li>
+        <li><a class="nav-link" href="game.html" data-text="Fun Games"><i class="fas fa-gamepad" style="color: blue;  transition: background 0.3s;" onmouseover="this.style.backgroundColor='lightgreen'" onmouseout="this.style.backgroundColor=''"></i></a></li>
+        <li><a class="nav-link" href="e-larning.html" data-text="E-Learning"><i class="fas fa-graduation-cap" style="color: orangered;  transition: background 0.3s;" onmouseover="this.style.backgroundColor='peru'" onmouseout="this.style.backgroundColor=''"></i></a></li>
+        <li><a class="nav-link" href="creative.html" data-text="Creative Zone"><i class="fas fa-paint-brush" style="color: lawngreen;  transition: background 0.3s;" onmouseover="this.style.backgroundColor='plum'" onmouseout="this.style.backgroundColor=''"></i></a></li>
+        <li><a class="nav-link" href="story.html" data-text="Stories"><i class="fas fa-book-open" style="color: gold;  transition: background 0.3s;" onmouseover="this.style.backgroundColor='lightcoral'" onmouseout="this.style.backgroundColor=''"></i></a></li>
+        <li><a class="nav-link" href="rhymes.html" data-text="Rhymes"><i class="fas fa-music" style="color: purple; transition: background 0.3s;" onmouseover="this.style.backgroundColor='lightblue'" onmouseout="this.style.backgroundColor=''"></i></a></li>
+        <li><a class="nav-link" href="comic.html" data-text="Comics"><i class="fas fa-book" style="color: chocolate;  transition: background 0.3s;" onmouseover="this.style.backgroundColor='khaki'" onmouseout="this.style.backgroundColor=''"></i></a></li>
+        <li><a class="nav-link feature-link" href="robot.html" data-text="Titans Bot"><i class="fas fa-robot" style="color: rgb(115, 184, 231); transition: background 0.3s;"onmouseover="this.style.backgroundColor='lightgray'" onmouseout="this.style.backgroundColor=''"></i></a></li>
+    </ul>
+</nav>
+
+    <input type="text" id="search" placeholder="Search..." onkeyup="searchCards()">
+
+    <div class="container">
+        <!-- Card 1 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/flappy bird.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/fllapy.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Flappy Bird</h5>
+                <p>Test your reflexes as you navigate a tiny bird through a series of obstacles. Tap to fly and avoid crashing!</p>
+                <a href="flappy bird.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 2 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/2048.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/2048.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>2048</h5>
+                <p>Slide numbered tiles and merge them to reach the elusive 2048 tile. A fun and addictive puzzle game!</p>
+                <a href="2048.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 3 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/maths.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/maths.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Maths Quiz</h5>
+                <p>Challenge your brain with exciting math puzzles. Solve equations and improve your calculation skills!</p>
+                <a href="maths.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 4 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/car.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/trafic reser.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>trafic reser</h5>
+                <p>Cars and speed through highways in this thrilling endless racing game. How far can you go?</p>
+                <a href="car.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 5 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/soinc.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/soinc runer.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>soinc runer</h5>
+                <p>Run, jump, and spin through exciting levels in this high-speed adventure. Collect rings and avoid obstacles!</p>
+                <a href="sonic rurner.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 6 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/ping pong.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/ping pong.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>ping pong</h5>
+                <p>Challenge your opponent in this fast-paced ping pong game. Can you become the ultimate champion?</p>
+                <a href="pingpong.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 7 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/Balloon Pop Challenge.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/balloon.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Balloon Pop Challenge</h5>
+                <p>Pop as many balloons as you can before time runs out! A fun and engaging challenge for all ages.</p>
+                <a href="Balloon Pop Challenge.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 8 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/maze.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/maze.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Maze</h5>
+                <p>Find your way through challenging mazes. Test your problem-solving skills and beat the clock!</p>
+                <a href="maze.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 9 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/memory.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/memory.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Memorygame</h5>
+                <p>Train your brain by matching pairs of cards. A fun way to improve concentration and memory skills.</p>
+                <a href="memorygame.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 10 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/typing.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/typing.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Typing</h5>
+                <p>Boost your typing speed and accuracy with this interactive typing challenge!</p>
+                <a href="typing.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 11 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/tic tec.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/tic tec toe.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Tic Tec</h5>
+                <p>Play against the computer or a friend in this classic game of strategy and logic.</p>
+                <a href="X-O.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 12 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/Word_race.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/color.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Colour word Race</h5>
+                <p>Test your brain’s speed! Match words to their correct colors before time runs out in this fun and fast-paced challenge.</p>
+                <a href="Colour_word_Race.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 13 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/word.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/word connecter.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Find The Word</h5>
+                <p>Sharpen your vocabulary skills by searching for hidden words in a grid. Can you find them all?</p>
+                <a href="word.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 14 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/tressure-hunt.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/treasure.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Tressure_hunt</h5>
+                <p>Embark on a thrilling adventure, solve clues, and find hidden treasures in mysterious locations!</p>
+                <a href="tressure_hunt.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    
+        <!-- Card 15 -->
+        <div class="game-card">
+            <div class="game-media">
+                <img src="image/GAME/block stack.jpg" alt="Game Image" class="game-image">
+                <video class="game-video" muted loop>
+                    <source src="video/game/pazel.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="game-info">
+                <h5>Tap-Stack</h5>
+                <p>Stack the blocks perfectly to build the tallest tower. Be precise and set high scores!</p>
+                <a href="TAP-STACK.html" class="play-now">Play Now</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="pagination">
+        <button onclick="changePage(-1)" id="prevBtn">Previous</button>
+        <ul id="paginationList"></ul>
+        <button onclick="changePage(1)" id="nextBtn">Next</button>
+    </div>
+ <!-- Footer -->
+ <footer class="glass-footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="game.html"><i class="fas fa-gamepad"></i> Games</a></li>
+                <li><a href="e-larning.html"><i class="fas fa-graduation-cap"></i> E-Learning</a></li>
+               <li><a href="creative.html"><i class="fas fa-paint-brush"></i> Creative Zone</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Community</h4>
+            <ul>
+                <li><a href="story.html"><i class="fas fa-book-open"></i> Stories</a></li>
+                <li><a href="rhymes.html"><i class="fas fa-music"></i> Rhymes</a></li>
+                <li><a href="comic.html"><i class="fas fa-book"></i> Comics</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Support</h4>
+            <ul>
+                <li><a href="about-page.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="feedback-page.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-column social-column">
+            <h4>Connect With Us</h4>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="mailto:your-email@example.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+            
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Color Craze. All Rights Reserved.</p>
+    </div>
+</footer>
+    <script src="js/game.js"></script>
+    <script src="js/nav.js"></script>
+</body>
+</html>

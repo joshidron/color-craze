@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Racing Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #87CEEB, #444);
+        }
+
+        #gameCanvas {
+            display: block;
+            background: linear-gradient(to bottom, #87CEEB, #444);
+            margin-left: 20%;
+        }
+
+        .score {
+            margin-left: 20%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+        }
+        .Max-score{
+            margin-left: 20%;
+            position: absolute;
+            top: 30px;
+            left: 10px;
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .exit-btn {
+            font-size: 20px;
+            color: #fff;
+            background-color: #10002b;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+            text-decoration: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        /* Game Over Popup Style */
+        #gameOverPopup {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="score">Score: <span id="score">0</span></div>
+    <div class="Max-score">Best Score: <span id="maxScore">0</span></div>
+    <canvas id="gameCanvas"></canvas>
+
+    <a href="game.html" class="exit-btn">Exit</a>
+
+    <!-- Game Over Popup -->
+    <div id="gameOverPopup">
+        Game Over!<br>
+        Final Score: <span id="finalScore"></span><br>
+        Press Arrow Keys to Restart
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gameOverPopup = document.getElementById('gameOverPopup');
+        const finalScoreElement = document.getElementById('finalScore');
+
+        canvas.width = 800;
+        canvas.height = 600;
+
+        const roadWidth = 400;
+        const carWidth = 40;
+        const carHeight = 60;
+        const laneCount = 3;
+
+        let score = 0;
+        let gameRunning = true;  // Flag to track the game state
+
+        const playerCarImage = new Image();
+        playerCarImage.src = 'game/car/car2.png'; // Replace with the actual path to the player car image
+
+        const aiCarImage = new Image();
+        aiCarImage.src = 'game/car/car1.png'; // Replace with the actual path to the AI car image
+
+        const playerCar = {
+            x: canvas.width / 2 - carWidth / 2,
+            y: canvas.height - carHeight - 20,
+            width: carWidth,
+            height: carHeight,
+            speed: 7 * 1.1 // Increased speed by 10%
+        };
+
+        const aiCar = {
+            x: canvas.width / 2 - carWidth / 2,
+            y: 100,
+            width: carWidth,
+            height: carHeight,
+            speed: 7 * 1.1 // Increased speed by 10%
+        };
+
+        const coins = [];
+        const coinRadius = 10;
+        const coinColor = 'gold';
+        const coinSpeed = 2;  // Increased coin fall speed
+
+        let keys = {
+            ArrowLeft: false,
+            ArrowRight: false
+        };
+
+        // Draw the road
+        function drawRoad() {
+            ctx.fillStyle = 'gray';
+            ctx.fillRect((canvas.width - roadWidth) / 2, 0, roadWidth, canvas.height);
+
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+
+            // Draw lane lines
+            for (let i = 1; i < laneCount; i++) {
+                const laneX = canvas.width / 2 - roadWidth / 2 + (roadWidth / laneCount) * i;
+                ctx.beginPath();
+                ctx.setLineDash([20, 20]);
+                ctx.moveTo(laneX, 0);
+                ctx.lineTo(laneX, canvas.height);
+                ctx.stroke();
+            }
+        }
+
+        // Draw a car
+        function drawCar(car, image) {
+            ctx.drawImage(image, car.x, car.y, car.width, car.height);
+        }
+
+        // Draw a coin
+        function drawCoin(coin) {
+            ctx.beginPath();
+            ctx.arc(coin.x, coin.y, coinRadius, 0, Math.PI * 2);
+            ctx.fillStyle = coinColor;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Update player car position
+        function updatePlayerCar() {
+            if (keys.ArrowLeft && playerCar.x > canvas.width / 2 - roadWidth / 2) {
+                playerCar.x -= playerCar.speed;
+            }
+            if (keys.ArrowRight && playerCar.x < canvas.width / 2 + roadWidth / 2 - carWidth) {
+                playerCar.x += playerCar.speed;
+            }
+        }
+
+        // Update AI car position
+        function updateAICar() {
+            aiCar.y += aiCar.speed;
+            if (aiCar.y > canvas.height) {
+                aiCar.y = -carHeight; // Reset position to top of the canvas
+                aiCar.x =
+                    canvas.width / 2 - roadWidth / 2 + Math.floor(Math.random() * laneCount) * (roadWidth / laneCount) + (roadWidth / laneCount - carWidth) / 2;
+            }
+        }
+
+        // Update coins
+        function updateCoins() {
+            for (let i = coins.length - 1; i >= 0; i--) {
+                coins[i].y += coinSpeed; // Increased coin fall speed
+
+                // Check if player collects the coin
+                if (
+                    coins[i].x > playerCar.x &&
+                    coins[i].x < playerCar.x + carWidth &&
+                    coins[i].y > playerCar.y &&
+                    coins[i].y < playerCar.y + carHeight
+                ) {
+                    coins.splice(i, 1);
+                    score += 10;
+                    document.getElementById('score').textContent = score;
+
+                    // Increase speed after every 100 points
+                    if (score % 100 === 0) {
+                        playerCar.speed += 1;
+                        aiCar.speed += 1;
+                    }
+                }
+
+                // Remove coin if it goes out of bounds
+                if (coins[i].y > canvas.height) {
+                    coins.splice(i, 1);
+                }
+            }
+
+            // Add new coins randomly
+            if (Math.random() < 0.02) {
+                const coinX =
+                    canvas.width / 2 - roadWidth / 2 + Math.floor(Math.random() * laneCount) * (roadWidth / laneCount) + roadWidth / (2 * laneCount);
+                coins.push({ x: coinX, y: -coinRadius });
+            }
+        }
+
+        // Check for collisions
+        function checkCollision() {
+            if (
+                playerCar.x < aiCar.x + aiCar.width &&
+                playerCar.x + playerCar.width > aiCar.x &&
+                playerCar.y < aiCar.y + aiCar.height &&
+                playerCar.y + playerCar.height > aiCar.y
+            ) {
+                showGameOver();
+            }
+        }
+
+        // Show the game over message
+        function showGameOver() {
+            gameRunning = false;  // Stop the game loop
+            gameOverPopup.style.display = 'block';
+            finalScoreElement.textContent = score;
+        }
+
+        // Hide the game over message and restart the game
+        function restartGame() {
+            gameOverPopup.style.display = 'none';
+            resetGame();
+            gameRunning = true;  // Restart the game loop
+            gameLoop();
+        }
+
+        // Reset the game
+        function resetGame() {
+            playerCar.x = canvas.width / 2 - carWidth / 2;
+            playerCar.y = canvas.height - carHeight - 20;
+            aiCar.y = 100;
+            aiCar.x = canvas.width / 2 - carWidth / 2;
+            score = 0;
+            document.getElementById('score').textContent = score;
+            coins.length = 0;
+            playerCar.speed = 7 * 1.1;  // Increased speed by 10%
+            aiCar.speed = 5 * 1.1;      // Increased speed by 10%
+        }
+
+        // Game loop
+        function gameLoop() {
+            if (!gameRunning) return;  // Stop the game loop if game is not running
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawRoad();
+            drawCar(playerCar, playerCarImage);
+            drawCar(aiCar, aiCarImage);
+
+            updatePlayerCar();
+            updateAICar();
+            updateCoins();
+
+            coins.forEach(drawCoin);
+            checkCollision();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Listen for key events
+        window.addEventListener('keydown', (e) => {
+            if (e.key in keys) keys[e.key] = true;
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                if (gameOverPopup.style.display === 'block') {
+                    restartGame();
+                }
+            }
+        });
+        window.addEventListener('keyup', (e) => {
+            if (e.key in keys) keys[e.key] = false;
+        });
+
+        // Retrieve the maximum score from localStorage
+let maxScore = localStorage.getItem('maxScore') || 0;
+document.getElementById('maxScore').textContent = maxScore;
+
+// Function to update the maximum score
+function updateMaxScore() {
+    if (score > maxScore) {
+        maxScore = score;
+        localStorage.setItem('maxScore', maxScore);
+        document.getElementById('maxScore').textContent = maxScore;
+    }
+}
+
+// Show the game over message
+function showGameOver() {
+    gameRunning = false; // Stop the game loop
+    updateMaxScore(); // Update the maximum score
+    gameOverPopup.style.display = 'block';
+    finalScoreElement.textContent = score;
+}
+
+// Reset the game
+function resetGame() {
+    playerCar.x = canvas.width / 2 - carWidth / 2;
+    playerCar.y = canvas.height - carHeight - 20;
+    aiCar.y = 100;
+    aiCar.x = canvas.width / 2 - carWidth / 2;
+    score = 0;
+    document.getElementById('score').textContent = score;
+    coins.length = 0;
+    playerCar.speed = 7 * 1.1; // Reset speed
+    aiCar.speed = 5 * 1.1;     // Reset speed
+}
+
+
+        gameLoop();
+    </script>
+</body>
+</html>

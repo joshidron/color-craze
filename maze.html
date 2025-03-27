@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maze Game</title>
+  <style>
+    /* Reset and base styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #e0f7fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+
+    h1 {
+      color: #00796b;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    /* Canvas container */
+    #mazeCanvas {
+      border: 4px solid #00796b;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+    }
+
+    /* Control panel */
+    #controls {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    #timer {
+      font-size: 1.2rem;
+      color: #00796b;
+      font-weight: bold;
+    }
+
+    /* Buttons */
+
+    .btn{
+        background-color: #e0f7fa;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      background-color: #00796b;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    button:active {
+      background-color: #00332e;
+    }
+
+    /* Message */
+    #message {
+      font-size: 1.1rem;
+      color: #d32f2f;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Responsive layout adjustments */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      #mazeCanvas {
+        width: 90%;
+        height: auto;
+      }
+
+      #controls {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #timer {
+        font-size: 1rem;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.2rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+      }
+
+      #timer {
+        font-size: 0.9rem;
+      }
+
+      #mazeCanvas {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .exit-btn {
+            font-size: 20px;
+            color: #fff;
+            background-color: #10002b;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0 .3s;
+            text-decoration: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+  </style>
+</head>
+<body>
+  <h1>Maze Game</h1>
+  <canvas id="mazeCanvas" width="800" height="800"></canvas>
+  <div id="controls">
+    <button class="btn"  id="exitButton"></button>
+  </div>
+  <div id="message"></div>
+  <a href="game.html" class="exit-btn">Exit</a>
+  <script>
+    const canvas = document.getElementById('mazeCanvas');
+    const ctx = canvas.getContext('2d');
+    const timerDisplay = document.getElementById('timer');
+    const messageDisplay = document.getElementById('message');
+
+    let timer;
+    let timeLeft = 300; // 5 minutes in seconds
+    let player = { x: 1, y: 1 }; // Player's starting position
+    let score = 0;
+    let maze = [];
+    const gridHeight = 20; // Increased height
+    const gridWidth = 20; // Increased width
+    let goal = { x: 0, y: 0 }; // Goal position
+    const tileSize = 40; // Size of each tile
+
+    function startGame() {
+      generateMaze();
+      drawMaze();
+      drawPlayer();
+      drawGoal();
+      startTimer();
+    }
+
+    function generateMaze() {
+      maze = new Array(gridHeight).fill().map(() => new Array(gridWidth).fill(1));
+      const stack = [];
+      const startCell = [Math.floor(Math.random() * gridHeight), Math.floor(Math.random() * gridWidth)];
+      stack.push(startCell);
+      maze[startCell[0]][startCell[1]] = 0;
+
+      while (stack.length > 0) {
+        const currentCell = stack.pop();
+        const neighbors = getNeighbors(currentCell);
+
+        if (neighbors.length > 0) {
+          stack.push(currentCell);
+          const nextCell = neighbors[Math.floor(Math.random() * neighbors.length)];
+          removeWall(currentCell, nextCell);
+          stack.push(nextCell);
+        }
+      }
+
+      setGoal();
+    }
+
+    function getNeighbors(cell) {
+      const neighbors = [];
+      const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+      for (const [dx, dy] of directions) {
+        const newX = cell[0] + dx * 2;
+        const newY = cell[1] + dy * 2;
+        if (newX >= 0 && newX < gridHeight && newY >= 0 && newY < gridWidth && maze[newX][newY] === 1) {
+          neighbors.push([newX, newY]);
+        }
+      }
+      return neighbors;
+    }
+
+    function removeWall(current, next) {
+      const wallX = (current[0] + next[0]) / 2;
+      const wallY = (current[1] + next[1]) / 2;
+      maze[wallX][wallY] = 0;
+      maze[next[0]][next[1]] = 0;
+    }
+
+    function setGoal() {
+      let goalSet = false;
+      while (!goalSet) {
+        const randomX = Math.floor(Math.random() * gridWidth);
+        const randomY = Math.floor(Math.random() * gridHeight);
+        if (maze[randomY][randomX] === 0 && (randomX !== player.x || randomY !== player.y)) {
+          goal = { x: randomX, y: randomY };
+          goalSet = true;
+        }
+      }
+    }
+
+    function drawMaze() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let row = 0; row < maze.length; row++) {
+        for (let col = 0; col < maze[row].length; col++) {
+          ctx.fillStyle = maze[row][col] === 1 ? '#37474f' : '#ffffff'; // Dark gray walls and white path
+          ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
+          ctx.strokeRect(col * tileSize, row * tileSize, tileSize, tileSize); // Grid lines
+        }
+      }
+    }
+
+    function drawPlayer() {
+      ctx.fillStyle = '#f44336'; // Red color for player
+      ctx.fillRect(player.x * tileSize + 5, player.y * tileSize + 5, tileSize - 10, tileSize - 10);
+      ctx.fillStyle = '#388e3c'; // Green color for goal
+      ctx.fillRect(goal.x * tileSize + 5, goal.y * tileSize + 5, tileSize - 10, tileSize - 10);
+    }
+
+    function startTimer() {
+      timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          alert("Time's up! Game Over.");
+          resetGame();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `Time Left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+
+    function resetGame() {
+      clearInterval(timer);
+      timeLeft = 300;
+      score = 0;
+      player = { x: 1, y: 1 };
+      startGame();
+    }
+
+    document.addEventListener('keydown', (event) => {
+      let newX = player.x;
+      let newY = player.y;
+
+      switch (event.key) {
+        case 'ArrowUp': newY = player.y - 1; break;
+        case 'ArrowDown': newY = player.y + 1; break;
+        case 'ArrowLeft': newX = player.x - 1; break;
+        case 'ArrowRight': newX = player.x + 1; break;
+      }
+    
+
+      if (newX >= 0 && newX < gridWidth && newY >= 0 && newY < gridHeight && maze[newY][newX] === 0) {
+        player.x = newX;
+        player.y = newY;
+      drawMaze();
+      drawPlayer();
+      checkGoal();
+    }
+});
+
+    function checkGoal() {
+      if (player.x === goal.x && player.y === goal.y) {
+        clearInterval(timer);
+        score += Math.max(0, 100 - timeLeft);
+        alert(`Level completed! Your score: ${score}`);
+        resetGame();
+      }
+    }
+
+    exitButton.addEventListener('click', () => {
+      clearInterval(timer);
+      alert(`Game exited. Your final score: ${score}`);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      startGame();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Stacking Game</title>
+  <style>
+    body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #282c34;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+canvas {
+    border: 2px solid #61dafb;
+    display: block;
+    margin: 20px auto;
+    box-shadow: 0 0 20px rgba(97, 218, 251, 0.5);
+    background-color: #1e1e1e;
+}
+
+#scoreDisplay {
+    text-align: center;
+    margin: 10px;
+    font-size: 20px;
+    color: #61dafb;
+}
+
+.block {
+    border: 2px solid #000;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: background-color 0.3s ease;
+}
+
+.game-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 10;
+}
+
+.game-over.visible {
+    opacity: 1;
+}
+
+.exit-btn {
+            font-size: 20px;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0 .3s;
+            text-decoration: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+  </style>
+</head>
+
+<body>
+    <a href="game.html" class="exit-btn">Exit</a>
+    <div id="scoreDisplay" style="text-align: center; margin: 10px; font-size: 20px;"></div>
+    <canvas id="gameCanvas" width="400" height="200"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Game constants
+let BLOCK_SIZE;
+const GRID_COLS = 10;
+const GRID_ROWS = 20;
+
+let currentBlock = null;
+let grid = Array(GRID_ROWS).fill().map(() => Array(GRID_COLS).fill(0));
+let gameOver = false;
+let score = 0;
+let level = 1;
+let speed = 500;
+let isPaused = false;
+
+// Dynamically set canvas size and block size
+function resizeCanvas() {
+    const canvasWidth = window.innerWidth * 0.8;
+    const canvasHeight = window.innerHeight * 0.8;
+
+    BLOCK_SIZE = Math.min(
+        Math.floor(canvasWidth / GRID_COLS),
+        Math.floor(canvasHeight / GRID_ROWS)
+    );
+
+    canvas.width = BLOCK_SIZE * GRID_COLS;
+    canvas.height = BLOCK_SIZE * GRID_ROWS;
+
+    drawGrid();
+}
+
+// Block class definition
+class Block {
+    constructor() {
+        this.x = Math.floor(Math.random() * (GRID_COLS - 1));
+        this.y = 0;
+        this.color = this.getRandomColor();
+        this.shape = this.getRandomShape();
+    }
+
+    getRandomColor() {
+        const colors = ['#FF5733', '#33FF57', '#3357FF', '#F1C40F', '#8E44AD', '#E67E22', '#2ECC71'];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    getRandomShape() {
+        const shapes = [
+            [[1]], // Single block
+            [[1, 1]], // Horizontal line
+            [[1], [1]], // Vertical line
+            [[1, 1], [1, 1]], // 2x2 block
+            [[1, 1, 1]], // 3 horizontal
+            [[1], [1], [1]], // 3 vertical
+            [[1, 1], [0, 1]], // L shape
+            [[1, 1], [1, 0]], // Reverse L shape
+        ];
+        return shapes[Math.floor(Math.random() * shapes.length)];
+    }
+
+    draw() {
+        ctx.fillStyle = this.color;
+        for (let row = 0; row < this.shape.length; row++) {
+            for (let col = 0; col < this.shape[row].length; col++) {
+                if (this.shape[row][col]) {
+                    ctx.fillRect(
+                        (this.x + col) * BLOCK_SIZE,
+                        (this.y + row) * BLOCK_SIZE,
+                        BLOCK_SIZE,
+                        BLOCK_SIZE
+                    );
+                    ctx.strokeStyle = '#000000'; // Black border for blocks
+                    ctx.strokeRect(
+                        (this.x + col) * BLOCK_SIZE,
+                        (this.y + row) * BLOCK_SIZE,
+                        BLOCK_SIZE,
+                        BLOCK_SIZE
+                    );
+                }
+            }
+        }
+    }
+
+    moveDown() {
+        if (this.canMove(this.x, this.y + 1)) {
+            this.y++;
+            return true;
+        }
+        return false;
+    }
+
+    canMove(newX, newY) {
+        for (let row = 0; row < this.shape.length; row++) {
+            for (let col = 0; col < this.shape[row].length; col++) {
+                if (this.shape[row][col]) {
+                    if (
+                        newX + col < 0 ||
+                        newX + col >= GRID_COLS ||
+                        newY + row >= GRID_ROWS ||
+                        grid[newY + row][newX + col]
+                    ) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    rotate() {
+        const newShape = this.shape[0].map((_, index) =>
+            this.shape.map(row => row[index]).reverse()
+        );
+
+        const canRotate = this.canMove(this.x, this.y);
+
+        if (canRotate) {
+            this.shape = newShape;
+        }
+    }
+}
+
+// Draw the grid
+function drawGrid() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw blocks on the grid
+    for (let y = 0; y < GRID_ROWS; y++) {
+        for (let x = 0; x < GRID_COLS; x++) {
+            if (grid[y][x]) {
+                ctx.fillStyle = grid[y][x];
+                ctx.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+
+                // Add border for blocks
+                ctx.strokeStyle = '#000000'; // Black border for better visibility
+                ctx.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+            }
+        }
+    }
+}
+
+// Check for line clearing
+function checkLines() {
+    let linesCleared = 0;
+
+    for (let y = GRID_ROWS - 1; y >= 0; y--) {
+        if (grid[y].every(cell => cell !== 0)) {
+            grid.splice(y, 1);
+            grid.unshift(Array(GRID_COLS).fill(0));
+            linesCleared++;
+            y++;
+        }
+    }
+
+    if (linesCleared > 0) {
+        score += linesCleared * 100 * level;
+        if (score >= level * 1000) {
+            level++;
+            speed = Math.max(100, 500 - (level - 1) * 50);
+        }
+    }
+}
+
+// Main game loop
+function gameLoop() {
+    if (gameOver) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById('scoreDisplay').textContent = `Score: ${score} | Level: ${level}`;
+
+    if (!currentBlock) {
+        currentBlock = new Block();
+        checkLines();
+    }
+
+    if (!currentBlock.moveDown()) {
+        for (let row = 0; row < currentBlock.shape.length; row++) {
+            for (let col = 0; col < currentBlock.shape[row].length; col++) {
+                if (currentBlock.shape[row][col]) {
+                    grid[currentBlock.y + row][currentBlock.x + col] = currentBlock.color;
+                }
+            }
+        }
+        if (currentBlock.y === 0) {
+            alert('Game Over!');
+            gameOver = true;
+        }
+        currentBlock = null;
+    }
+
+    drawGrid();
+    if (currentBlock) currentBlock.draw();
+
+    setTimeout(gameLoop, speed);
+}
+
+// Keyboard controls
+document.addEventListener('keydown', (e) => {
+    if (isPaused || gameOver) return;
+
+    if (!currentBlock) return;
+
+    switch (e.key) {
+        case 'ArrowLeft':
+            if (currentBlock.canMove(currentBlock.x - 1, currentBlock.y)) currentBlock.x--;
+            break;
+        case 'ArrowRight':
+            if (currentBlock.canMove(currentBlock.x + 1, currentBlock.y)) currentBlock.x++;
+            break;
+        case 'ArrowDown':
+            currentBlock.moveDown();
+            break;
+        case 'ArrowUp':
+            currentBlock.rotate();
+            break;
+        case ' ':
+            while (currentBlock.moveDown()) score++;
+            break;
+    }
+});
+
+// Initialize the canvas and start the game
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+gameLoop();
+
+    </script>
+</body>
+
+</html>

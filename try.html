@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titans Bot - Coming Soon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(120deg, #ffafbd, #ffc3a0);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .robot {
+            width: 150px;
+            height: 150px;
+            background: #fff;
+            border-radius: 50%;
+            position: relative;
+            animation: bounce 2s infinite;
+        }
+
+        .robot::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+
+        .robot::after {
+            content: "";
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            width: 80px;
+            height: 40px;
+            background: #000;
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+
+        .eye {
+            width: 15px;
+            height: 15px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+            animation: blink 3s infinite;
+        }
+
+        .eye.left {
+            left: 40px;
+        }
+
+        .eye.right {
+            right: 40px;
+        }
+
+        .coming-soon {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards 2s;
+        }
+
+        .subtext {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards 3s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="robot">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+    </div>
+
+    <div class="coming-soon">Titans Bot is Coming Soon!</div>
+    <div class="subtext">Stay tuned for an amazing experience!</div>
+
+    <script>
+        setTimeout(() => {
+            alert("Titans Bot is on its way! Get ready! 🚀");
+        }, 5000);
+    </script>
+</body>
+</html>
